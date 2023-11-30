@@ -1,4 +1,4 @@
-import useStyles from '@src/components/footer/Footer.styles'
+import useStyles from './Footer.styles'
 import { Box, Button, Divider, Typography } from '@mui/material'
 import { theme } from '@src/theme'
 import LinkedInIcon from '@mui/icons-material/LinkedIn'
