@@ -1,6 +1,6 @@
 import { type PropsWithChildren } from 'react'
-import { Appbar } from '@src/components/appbar/Appbar'
-import { Sidebar } from '@src/components/sidebar/Sidebar'
+import { Appbar } from '../appbar'
+import { Sidebar } from '../sidebar'
 
 export function AdminLayout ({ children }: PropsWithChildren) {
   return (
