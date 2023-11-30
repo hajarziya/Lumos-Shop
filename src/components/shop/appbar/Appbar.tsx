@@ -3,6 +3,7 @@ import { AppBar, Box, Button, IconButton, TextField, Toolbar, Typography } from 
 import MenuIcon from '@mui/icons-material/Menu'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
+import ManageAccounts from '@mui/icons-material/ManageAccounts'
 import useStyles from './Appbar.styles'
 import Link from 'next/link'
 import { DrawerCart } from '../drawer-cart'
@@ -36,6 +37,11 @@ const Appbar: React.FC = () => {
 				</Toolbar>
 				<TextField placeholder="Search" style={{ width: '50%' }}/>
 				<div>
+					<Link href="/admin" passHref>
+						<Button variant="text" endIcon={<ManageAccounts/>} className={classes.btnText}>
+							Admin
+						</Button>
+					</Link>
 					<Link href="/signin" passHref>
 						<Button variant="text" endIcon={<AccountCircleIcon/>} className={classes.btnText}>
 							Sign in
