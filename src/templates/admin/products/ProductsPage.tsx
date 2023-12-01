@@ -2,6 +2,7 @@ import { AdminLayout, ProductItem } from '@src/components/admin'
 import useStyles from './ProductsPage.styles'
 import { Box, Button, Pagination, Stack, TextField, Typography } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add'
+import Link from 'next/link'
 
 export function ProductsPage () {
   const { classes } = useStyles()
@@ -11,10 +12,12 @@ export function ProductsPage () {
 				<Typography variant={'h5'} fontWeight={'bold'}>Products</Typography>
 				<TextField size="small" placeholder="Search" sx={{ width: '30rem', marginRight: '7rem' }}></TextField>
 				<Stack className={classes.addWrapper}>
+					<Link href='/admin/products/create'>
 					<Button className={classes.addBtn}>
 						<AddIcon/>
 						<Typography sx={{ marginLeft: '5px', fontSize: '10px' }}>Add Product</Typography>
 					</Button>
+					</Link>
 					<Typography fontWeight={'bold'}>Use tags to filter your search</Typography>
 				</Stack>
 			</Box>

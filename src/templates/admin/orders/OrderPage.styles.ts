@@ -19,5 +19,11 @@ export default makeStyles()((theme) => ({
     width: '70%',
     borderRadius: '12px',
     padding: '10px'
+  },
+  popver: {
+    alignItems: 'center',
+    display: 'flex',
+    textAlign: 'center'
+
   }
 }))
