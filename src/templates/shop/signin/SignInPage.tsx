@@ -5,11 +5,6 @@ import Link from 'next/link'
 
 export function SignInPage () {
   const { classes } = useStyles()
-  const [showEnterEmail, setShowEnterEmail] = useState(true)
-
-  const handleContinueClick = () => {
-    setShowEnterEmail(false)
-  }
 
   return (
 		<>
@@ -17,37 +12,22 @@ export function SignInPage () {
 				<Typography variant="h3" fontWeight="bold">Lumos</Typography>
 			</Box>
 			<Divider/>
-			{showEnterEmail ? <EnterEmail onContinueClick={handleContinueClick}/> : <EnterPassword/>}
-		</>
-  )
-}
-
-interface EnterEmailProps {
-  onContinueClick: () => void
-}
-
-export function EnterEmail ({ onContinueClick }: EnterEmailProps) {
-  const { classes } = useStyles()
-  return (
-		<Box className={classes.wrapper}>
-			<Typography variant="h6">Enter your email address to sign in or to create an account</Typography>
+			<Box className={classes.wrapper}>
+			<Typography variant="h6" fontWeight={'bold'}>Enter your email and password address to sign in or to create an account</Typography>
 			<TextField className={classes.textField} id="outlined-Email-input" label="Email Address" type="email"
 					   autoComplete="current-password"/>
-			<Button className={classes.btn} onClick={onContinueClick}>Continue</Button>
-		</Box>
-  )
-}
-
-export function EnterPassword () {
-  const { classes } = useStyles()
-  return (
-		<Box className={classes.wrapper}>
-			<Typography variant="h6">Enter password to sign in or to create an account</Typography>
 			<TextField className={classes.textField} id="outlined-password-input" label="Password" type="password"
 					   autoComplete="current-password"/>
 			<Link href="/">
 				<Button className={classes.btn}>Sign In</Button>
 			</Link>
-		</Box>
+			<Box className={classes.wrapperSignupBtn}>
+				<Typography marginBottom={'30px'} fontWeight={'bold'} variant="h6">As a new user, please provide the following details to create your account:</Typography>
+				<Link href="/signup">
+				<Button className={classes.btn}>Sign Up</Button>
+				</Link>
+			</Box>
+			</Box>
+		</>
   )
 }

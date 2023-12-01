@@ -25,54 +25,60 @@ export function ProductDetailPage () {
 				<Card className={classes.imgWrapper}>
 					<CardMedia
 						component="img"
-						height="140"
-						image="/images/trees.webp"
+						height="540"
+						image="/images/tree.webp"
 						alt="green iguana"
 					/>
 				</Card>
 				<Box>
-					<Typography variant="h2">Abbigale 65.8 Faux Leather Convertible Sofa</Typography>
+					<Typography variant="h3">Abbigale 65.8 Faux Leather Convertible Sofa</Typography>
 					<Rating name="read-only" readOnly/>
-					<Typography variant="h2">$172.99</Typography>
-					<Typography variant="h2">On Sale</Typography>
-					<Box>
-						<Typography>Select Fabric:</Typography>
-						<Button>
+					<Typography variant="h4">$172.99</Typography>
+					<Typography variant="h4">On Sale</Typography>
+					<Box margin="30px 0">
+						<Typography variant="h4" fontWeight={'bold'}>Select Fabric:</Typography>
+						<Box className={classes.wrapperBtn}>
+						<Button className={classes.btnColor}>
 							<CardMedia
 								component="img"
-								height="140"
-								image="/images/trees.webp"
+								height="70"
+								sx={{ width: '70px' }}
+								image="/images/tree.webp"
 								alt="green iguana"
 							/>
-							<Typography>Black Faux Leather</Typography>
+							<Typography sx={{ fontSize: '12px', fontWeight: 'bold' }}>Black Faux Leather</Typography>
 						</Button>
-						<Button>
+						<Button className={classes.btnColor}>
 							<CardMedia
 								component="img"
-								height="140"
-								image="/images/trees.webp"
+								height="70"
+								sx={{ width: '70px' }}
+								image="/images/tree.webp"
 								alt="green iguana"
 							/>
-							<Typography>Blue Faux Leather</Typography>
+							<Typography sx={{ fontSize: '12px', fontWeight: 'bold' }}>Blue Faux Leather</Typography>
 						</Button>
-						<Button>
+						<Button className={classes.btnColor}>
 							<CardMedia
 								component="img"
-								height="140"
-								image="/images/trees.webp"
+								height="70"
+								sx={{ width: '70px' }}
+								image="/images/tree.webp"
 								alt="green iguana"
 							/>
-							<Typography>Brown Faux Leather</Typography>
+							<Typography sx={{ fontSize: '12px', fontWeight: 'bold' }}>Brown Faux Leather</Typography>
 						</Button>
-						<Button>
+						<Button className={classes.btnColor}>
 							<CardMedia
 								component="img"
-								height="140"
-								image="/images/trees.webp"
+								height="70"
+								sx={{ width: '70px' }}
+								image="/images/tree.webp"
 								alt="green iguana"
 							/>
-							<Typography>Green Faux Leather</Typography>
+							<Typography sx={{ fontSize: '12px', fontWeight: 'bold' }}>Green Faux Leather</Typography>
 						</Button>
+						</Box>
 					</Box>
 					<Stack spacing={2} alignItems="center">
 						<ButtonGroup size="small" aria-label="quantity selector">
@@ -83,10 +89,10 @@ export function ProductDetailPage () {
 						<IconButton>
 							<FavoriteBorder/>
 						</IconButton>
-						<Button>Add To Cart</Button>
+
 					</Stack>
 					<Divider/>
-					<Accordion>
+					<Accordion sx={{ backgroundColor: 'transparent' }}>
 						<AccordionSummary>Description</AccordionSummary>
 						<AccordionDetails>
 							<Typography>
@@ -128,7 +134,7 @@ export function ProductDetailPage () {
 
 						</AccordionDetails>
 					</Accordion>
-
+					<Button className={classes.btn}>Add To Cart</Button>
 				</Box>
 
 			</Box>

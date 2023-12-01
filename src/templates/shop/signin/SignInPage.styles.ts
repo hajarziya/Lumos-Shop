@@ -23,6 +23,9 @@ export default makeStyles()((theme) => ({
     backgroundColor: theme.palette.primary.main,
     color: theme.palette.secondary.main,
     height: '60px'
+  },
+  wrapperSignupBtn: {
+    marginTop: '150px'
   }
 
 }))
