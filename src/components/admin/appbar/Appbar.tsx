@@ -1,17 +1,22 @@
 import React from 'react'
-import { AppBar, Avatar, Box, TextField, Toolbar, Typography } from '@mui/material'
+import { AppBar, Avatar, Box, TextField, Toolbar, Typography, Button } from '@mui/material'
 
 import useStyles from './Appbar.styles'
+import Link from 'next/link'
 
 const Appbar: React.FC = () => {
   const { classes } = useStyles()
 
   return (
 		<AppBar position="sticky" color="primary" className={classes.appBar}>
+			<Link href='/'>
+			<Button>
 			<Typography variant="h5"
 						sx={{ display: { xs: 'none', sm: 'block' }, ml: '3rem' }}>
 				Lumos
 			</Typography>
+			</Button>
+			</Link>
 			<Toolbar variant="dense" sx={{ flex: 1 }}>
 				<Box className={classes.leftBarWrapper}>
 					<TextField placeholder="Search" style={{ width: '50%' }}/>

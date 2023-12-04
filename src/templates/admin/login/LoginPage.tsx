@@ -1,4 +1,4 @@
-import { AppBar, Box, Button, TextField, Typography } from '@mui/material'
+import { AppBar, Box, Button, TextField, Typography, Link } from '@mui/material'
 import useStyles from './LogInPage.styles'
 import { useCallback, useState } from 'react'
 import { useLogin } from '@src/api'
@@ -30,8 +30,10 @@ export function LoginPage () {
   return (
 		<>
 			<AppBar position="sticky" className={classes.appBar}>
-				<Typography variant="h5"
-							sx={{ display: { xs: 'none', sm: 'block' }, ml: '3rem', fontWeight: 'bold' }}>Lumos</Typography>
+				<Link href='/' underline="none">
+				<Typography variant="h2"
+					className={classes.logo}>Lumos</Typography>
+				</Link>
 			</AppBar>
 			<Box className={classes.wrapperBox}>
 				<TextField

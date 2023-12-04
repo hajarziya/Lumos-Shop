@@ -1,6 +1,16 @@
 import { makeStyles } from '@src/theme'
 
 export default makeStyles()((theme) => ({
+  header: {
+    backgroundColor: 'transparent',
+    height: '100px'
+  },
+  logo: {
+    paddingTop: '10px',
+    paddingLeft: '40px',
+    color: theme.palette.primary.dark,
+    fontWeight: 'bold'
+  },
   container: {
     display: 'flex',
     margin: '30px'
@@ -8,7 +18,7 @@ export default makeStyles()((theme) => ({
   wrapper: {
     display: 'flex',
     justifyContent: 'center',
-    margin: '30px',
+    margin: '140px',
     flexDirection: 'column',
     textAlign: 'center',
     alignItems: 'center',
@@ -26,6 +36,11 @@ export default makeStyles()((theme) => ({
   },
   wrapperSignupBtn: {
     marginTop: '150px'
+  },
+  typograghy: {
+    color: theme.palette.primary.dark,
+    marginBottom: '30px',
+    fontWeight: 'bold'
   }
 
 }))

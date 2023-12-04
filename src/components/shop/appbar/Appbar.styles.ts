@@ -28,5 +28,14 @@ export default makeStyles()((theme) => ({
       color: theme.palette.secondary.main
 
     }
+  },
+  logo: {
+    fontWeight: 'bold',
+    color: theme.palette.primary.dark,
+    marginLeft: '30px',
+    '&:hover': {
+      backgroundColor: 'transparent'
+    }
   }
+
 }))

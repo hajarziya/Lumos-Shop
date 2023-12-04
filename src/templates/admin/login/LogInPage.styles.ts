@@ -14,9 +14,14 @@ export default makeStyles()((theme) => ({
     borderRadius: '15px'
   },
   appBar: {
-    padding: '15px',
     backgroundColor: theme.palette.secondary.main,
-    color: '#2b2d42'
-
+    height: '100px'
+  },
+  logo: {
+    paddingTop: '10px',
+    paddingLeft: '40px',
+    color: theme.palette.primary.dark,
+    fontWeight: 'bold'
   }
+
 }))
