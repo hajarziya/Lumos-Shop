@@ -3,9 +3,14 @@ import useStyles from './ProductsPage.styles'
 import { Box, Button, Pagination, Stack, TextField, Typography } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add'
 import Link from 'next/link'
+import { useProducts } from '@src/api'
+import React, { useMemo, useState } from 'react'
 
 export function ProductsPage () {
   const { classes } = useStyles()
+  const [page, setPage] = useState(1)
+  const { data } = useProducts({ page })
+  const products = useMemo(() => data?.data.data.products ?? [], [data])
   return (
 		<AdminLayout>
 			<Box className={classes.header}>
@@ -23,10 +28,7 @@ export function ProductsPage () {
 			</Box>
 			<Box className={classes.countentWrapper}>
 				<Box className={classes.productWrapper}>
-					<ProductItem/>
-					<ProductItem/>
-					<ProductItem/>
-					<ProductItem/>
+					{products.map(product => <ProductItem {...product} key={product._id} />)}
 				</Box>
 				<Box className={classes.categoriBtnsWrapper}>
 					<Button variant="contained">All</Button>
@@ -43,7 +45,11 @@ export function ProductsPage () {
 				</Box>
 			</Box>
 			<Stack sx={{ textAlign: 'center', alignItems: 'center' }}>
-				<Pagination count={10} shape="rounded"/>
+				<Pagination
+							count={data?.data.total_pages}
+							shape="rounded"
+							page={page}
+							onChange={(_, _page) => { setPage(_page) }}/>
 			</Stack>
 		</AdminLayout>
   )

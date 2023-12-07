@@ -11,7 +11,7 @@ export default makeStyles()((theme) => ({
   productWrapper: {
     display: 'flex',
     gap: '30px',
-    width: '80%'
+    width: '90%'
 
   },
   addBtn: {
