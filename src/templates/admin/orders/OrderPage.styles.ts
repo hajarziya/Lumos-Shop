@@ -37,5 +37,9 @@ export default makeStyles()((theme) => ({
   btn: {
     backgroundColor: theme.palette.primary.main,
     color: theme.palette.secondary.main
+  },
+  btnFilter: {
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.secondary.main
   }
 }))

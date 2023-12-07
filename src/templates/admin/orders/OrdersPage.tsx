@@ -71,11 +71,11 @@ export function OrdersPage () {
                 <Table className={classes.table}>
                     <TableHead>
                         <TableRow>
-                            <TableCell>User</TableCell>
-                            <TableCell>Amount</TableCell>
-                            <TableCell>Date</TableCell>
-                            <TableCell>Status</TableCell>
-                            <TableCell>Action</TableCell>
+                            <TableCell sx={{ fontWeight: 'bold' }}>User</TableCell>
+                            <TableCell sx={{ fontWeight: 'bold' }}>Amount</TableCell>
+                            <TableCell sx={{ fontWeight: 'bold' }}>Date</TableCell>
+                            <TableCell sx={{ fontWeight: 'bold' }}>Status</TableCell>
+                            <TableCell sx={{ fontWeight: 'bold' }}>Action</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -109,7 +109,7 @@ export function OrdersPage () {
                     </TableBody>
                 </Table>
                 <Box className={classes.form}>
-                    <Typography>Filter</Typography>
+                    <Typography sx={{ fontWeight: 'bold' }}>Filter</Typography>
                     <TextField
                         label="Search Name"
                         sx={{ width: '300px' }}
@@ -128,7 +128,7 @@ export function OrdersPage () {
                         label="Amount"
                         sx={{ width: '300px' }}
                     />
-                    <Button>Filter</Button>
+                    <Button className={classes.btnFilter}>Filter</Button>
 
                 </Box>
             </Stack>

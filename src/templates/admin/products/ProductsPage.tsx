@@ -3,14 +3,19 @@ import useStyles from './ProductsPage.styles'
 import { Box, Button, Pagination, Stack, TextField, Typography } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add'
 import Link from 'next/link'
-import { useProducts } from '@src/api'
+import { useCategories, useProducts } from '@src/api'
 import React, { useMemo, useState } from 'react'
 
 export function ProductsPage () {
   const { classes } = useStyles()
   const [page, setPage] = useState(1)
-  const { data } = useProducts({ page })
+  const [selectedCategoryId, setSelectedCategoryId] = useState<string | undefined>(undefined)
+  const { data } = useProducts({ page, category: selectedCategoryId })
   const products = useMemo(() => data?.data.data.products ?? [], [data])
+
+  const { data: categoriesData } = useCategories({ page: 1 })
+  const categories = useMemo(() => categoriesData?.data.data.categories ?? [], [categoriesData])
+
   return (
 		<AdminLayout>
 			<Box className={classes.header}>
@@ -31,17 +36,13 @@ export function ProductsPage () {
 					{products.map(product => <ProductItem {...product} key={product._id} />)}
 				</Box>
 				<Box className={classes.categoriBtnsWrapper}>
-					<Button variant="contained">All</Button>
-					<Button variant="outlined">Starters</Button>
-					<Button variant="outlined">Pastas</Button>
-					<Button variant="outlined">Pizza</Button>
-					<Button variant="outlined">Rustic</Button>
-					<Button variant="outlined">Pastas</Button>
-					<Button variant="outlined">Pizza</Button>
-					<Button variant="outlined">Rustic</Button>
-					<Button variant="outlined">Pastas</Button>
-					<Button variant="outlined">Pizza</Button>
-					<Button variant="outlined">Rustic</Button>
+					<Button variant={!selectedCategoryId ? 'contained' : 'outlined'} onClick={() => { setSelectedCategoryId(undefined) }}>All</Button>
+					{categories.map(category =>
+						<Button key={category._id}
+								variant={selectedCategoryId === category._id ? 'contained' : 'outlined'}
+								onClick={() => { setSelectedCategoryId(category._id) }}>
+							{category.name}
+						</Button>)}
 				</Box>
 			</Box>
 			<Stack sx={{ textAlign: 'center', alignItems: 'center' }}>

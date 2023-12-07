@@ -50,6 +50,14 @@ export interface IProduct {
   description: string
 }
 
+export interface IUser {
+  _id: string
+  firstName: string
+  address: string
+  active: string
+  createdAt: string
+}
+
 export interface ICategoriesApi {
   params: {
     page: number
@@ -75,6 +83,7 @@ export interface ISubCategoriesApi {
 export interface IProductsApi {
   params: {
     page: number
+    category?: string
   }
   response: {
     data: IApiResponse<{
@@ -106,6 +115,17 @@ export interface IOrdersApi {
   response: {
     data: IApiResponse<{
       orders: IOrder[]
+    }>
+  }
+}
+
+export interface IUsersApi {
+  params: {
+    page: number
+  }
+  response: {
+    data: IApiResponse<{
+      orders: IUser[]
     }>
   }
 }

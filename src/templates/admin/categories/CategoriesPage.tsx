@@ -43,27 +43,11 @@ export function CategoriesPage () {
                         sx={{ marginLeft: '120px', marginBottom: '20px' }}>Categories</Typography>
             <Box className={classes.container}>
                 <Table className={classes.tableWrapper}>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>Title</TableCell>
-                            <TableCell>Created At</TableCell>
-                            <TableCell>
-                                <Button aria-describedby={id} variant="contained"
-                                        onClick={handleClick}><MoreVertIcon/></Button>
-                                <Popover
-                                    className={classes.popver}
-                                    id={id}
-                                    open={open}
-                                    anchorEl={anchorEl}
-                                    onClose={handleClose}
-                                    anchorOrigin={{
-                                      vertical: 'bottom',
-                                      horizontal: 'left'
-                                    }}
-                                >
-                                    <Typography sx={{ padding: '1px 10px' }}><EditNoteIcon/> Edit</Typography>
-                                </Popover>
-                            </TableCell>
+                    <TableHead >
+                        <TableRow >
+                            <TableCell sx={{ fontWeight: 'bold' }} >Title</TableCell>
+                            <TableCell sx={{ fontWeight: 'bold' }}>Created At</TableCell>
+                            <TableCell sx={{ fontWeight: 'bold' }}>Actions</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
