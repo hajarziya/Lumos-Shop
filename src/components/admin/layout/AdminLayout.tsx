@@ -7,7 +7,7 @@ export function AdminLayout ({ children }: PropsWithChildren) {
 		<>
 			<Appbar/>
 			<Sidebar/>
-			<div style={{ width: '80%', marginLeft: '250px', marginTop: '50px', height: '100vh', marginBottom: '50px' }}>
+			<div style={{ width: '80%', marginLeft: '250px', marginTop: '50px', height: '100vh' }}>
 				{children}
 			</div>
 		</>

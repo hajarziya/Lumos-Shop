@@ -25,6 +25,7 @@ export interface ICategory {
   updatedAt: string
   slugname: string
 }
+
 export interface ISubCategory {
   category: ICategory
   _id: string
@@ -34,7 +35,8 @@ export interface ISubCategory {
   updatedAt: string
   slugname: string
 }
-export interface Iproduct {
+
+export interface IProduct {
   _id: string
   name: string
   icon: string
@@ -76,7 +78,34 @@ export interface IProductsApi {
   }
   response: {
     data: IApiResponse<{
-      products: Iproduct[]
+      products: IProduct[]
+    }>
+  }
+}
+
+export interface IOrder {
+  _id: string
+  user: {
+    _id: string
+    firstname: string
+    lastname: string
+  }
+  products: IProduct[]
+  totalPrice: number
+  deliveryDate: string
+  deliveryStatus: boolean
+  createdAt: string
+  updatedAt: string
+}
+
+export interface IOrdersApi {
+  params: {
+    page: number
+    deliveryStatus?: boolean
+  }
+  response: {
+    data: IApiResponse<{
+      orders: IOrder[]
     }>
   }
 }

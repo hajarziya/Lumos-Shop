@@ -25,5 +25,17 @@ export default makeStyles()((theme) => ({
     display: 'flex',
     textAlign: 'center'
 
+  },
+  titleBox: {
+    display: 'flex',
+    alignItems: 'center',
+    textAlign: 'center',
+    justifyContent: 'space-between',
+    marginLeft: '-100px'
+
+  },
+  btn: {
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.secondary.main
   }
 }))

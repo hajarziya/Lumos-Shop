@@ -1,9 +1,9 @@
 import { Card, CardContent, CardMedia, Divider, Typography } from '@mui/material'
 import useStyles from './ProductItem.styles'
 import EditNoteIcon from '@mui/icons-material/EditNote'
-import { Iproduct } from '@src/api/interface'
+import { IProduct } from '@src/api/interface'
 
-export function ProductItem (product: Iproduct) {
+export function ProductItem (product: IProduct) {
   const { classes } = useStyles()
 
   return (
