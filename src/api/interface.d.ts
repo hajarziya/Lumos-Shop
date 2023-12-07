@@ -24,7 +24,7 @@ export interface ICategory {
   slugname: string
 }
 export interface ISubCategory {
-  category: string
+  category: ICategory
   _id: string
   name: string
   icon: string
@@ -50,7 +50,7 @@ export interface ISubCategoriesApi {
   }
   response: {
     data: IApiResponse<{
-      categories: ICategory[]
+      subcategories: ISubCategory[]
     }>
   }
 }
