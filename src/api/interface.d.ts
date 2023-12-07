@@ -1,3 +1,5 @@
+import { array } from 'yup'
+
 interface IApiResponse<T> {
   status: string
   data: T
@@ -31,6 +33,19 @@ export interface ISubCategory {
   createdAt: string
   updatedAt: string
   slugname: string
+}
+export interface Iproduct {
+  _id: string
+  name: string
+  icon: string
+  images: array
+  quantity: number
+  price: number
+  slugname: string
+  category: ICategory
+  subcategory: ISubCategory
+  brand: string
+  description: string
 }
 
 export interface ICategoriesApi {
