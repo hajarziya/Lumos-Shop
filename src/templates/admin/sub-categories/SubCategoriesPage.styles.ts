@@ -17,5 +17,11 @@ export default makeStyles()((theme) => ({
   },
   pagination: {
     color: theme.palette.primary.main
+  },
+  popver: {
+    alignItems: 'center',
+    display: 'flex',
+    textAlign: 'center'
+
   }
 }))

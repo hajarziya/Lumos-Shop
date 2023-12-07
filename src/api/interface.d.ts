@@ -54,3 +54,14 @@ export interface ISubCategoriesApi {
     }>
   }
 }
+
+export interface IProductsApi {
+  params: {
+    page: number
+  }
+  response: {
+    data: IApiResponse<{
+      products: Iproduct[]
+    }>
+  }
+}
