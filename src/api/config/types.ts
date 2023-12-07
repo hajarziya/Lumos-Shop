@@ -1,5 +1,6 @@
 import { UseMutationOptions as BaseUseMutationOptions, UseQueryOptions as BaseUseQueryOptions } from 'react-query'
 import { type AxiosError } from 'axios'
+import { IApiResponse } from '@src/api/interface'
 
 export type Awaited<T> = T extends PromiseLike<infer U> ? Awaited<U> : T
 
@@ -9,7 +10,7 @@ export type UseMutationOptions<
 > = BaseUseMutationOptions<Awaited<ReturnType<F>>, AxiosError, S>
 
 export type UseQueryOptions<
-	F extends (...args: any) => Promise<unknown>,
+	F extends (...args: any) => Promise<{ data: IApiResponse<unknown> }>,
 	S = Awaited<ReturnType<F>>,
 > = BaseUseQueryOptions<Awaited<ReturnType<F>>, AxiosError, S, any>
 

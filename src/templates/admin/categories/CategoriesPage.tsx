@@ -14,11 +14,14 @@ import {
   Popover
 } from '@mui/material'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
-import React from 'react'
+import React, { useMemo, useState } from 'react'
 import EditNoteIcon from '@mui/icons-material/EditNote'
+import { useCategories } from '@src/api'
+import moment from 'moment'
 
 export function CategoriesPage () {
   const { classes } = useStyles()
+  const [page, setPage] = useState(1)
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null)
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -31,223 +34,70 @@ export function CategoriesPage () {
   const open = Boolean(anchorEl)
   const id = <MoreVertIcon/> ? 'Edit' : undefined
 
+  const { data } = useCategories({ page })
+  const categories = useMemo(() => data?.data.data.categories ?? [], [data])
+
   return (
-		<>
-			<AdminLayout>
-				<Typography fontWeight={'bold'} variant={'h5'}
-							sx={{ marginLeft: '120px', marginBottom: '20px' }}>Categories</Typography>
-				<Box className={classes.container}>
-					<Table className={classes.tableWrapper}>
-						<TableHead>
-							<TableRow>
-								<TableCell>Title</TableCell>
-								<TableCell>Active</TableCell>
-								<TableCell>
-									<Button aria-describedby={id} variant="contained" onClick={handleClick}><MoreVertIcon/></Button>
-									<Popover
-										className={classes.popver}
-										id={id}
-										open={open}
-										anchorEl={anchorEl}
-										onClose={handleClose}
-										anchorOrigin={{
-										  vertical: 'bottom',
-										  horizontal: 'left'
-										}}
-									>
-										<Typography sx={{ padding: '1px 10px' }}><EditNoteIcon/> Edit</Typography>
-									</Popover>
-								</TableCell>
-							</TableRow>
-						</TableHead>
-						<TableBody>
-							<TableRow>
-								<TableCell>Fantastic</TableCell>
-								<TableCell>Yes</TableCell>
-								<TableCell>
-									<Button aria-describedby={id} variant="contained" onClick={handleClick}><MoreVertIcon/></Button>
-									<Popover
-										className={classes.popver}
-										id={id}
-										open={open}
-										anchorEl={anchorEl}
-										onClose={handleClose}
-										anchorOrigin={{
-										  vertical: 'bottom',
-										  horizontal: 'left'
-										}}
-									>
-										<Typography sx={{ padding: '1px 10px' }}><EditNoteIcon/> Edit</Typography>
-									</Popover>
-								</TableCell>
-							</TableRow>
-							<TableRow>
-								<TableCell>Fantastic</TableCell>
-								<TableCell>Yes</TableCell>
-								<TableCell>
-									<Button aria-describedby={id} variant="contained" onClick={handleClick}><MoreVertIcon/></Button>
-									<Popover
-										className={classes.popver}
-										id={id}
-										open={open}
-										anchorEl={anchorEl}
-										onClose={handleClose}
-										anchorOrigin={{
-										  vertical: 'bottom',
-										  horizontal: 'left'
-										}}
-									>
-										<Typography sx={{ padding: '1px 10px' }}><EditNoteIcon/> Edit</Typography>
-									</Popover>
-								</TableCell>
-							</TableRow>
-							<TableRow>
-								<TableCell>Fantastic</TableCell>
-								<TableCell>Yes</TableCell>
-								<TableCell>
-									<Button aria-describedby={id} variant="contained" onClick={handleClick}><MoreVertIcon/></Button>
-									<Popover
-										className={classes.popver}
-										id={id}
-										open={open}
-										anchorEl={anchorEl}
-										onClose={handleClose}
-										anchorOrigin={{
-										  vertical: 'bottom',
-										  horizontal: 'left'
-										}}
-									>
-										<Typography sx={{ padding: '1px 10px' }}><EditNoteIcon/> Edit</Typography>
-									</Popover>
-								</TableCell>
-							</TableRow>
-							<TableRow>
-								<TableCell>Fantastic</TableCell>
-								<TableCell>Yes</TableCell>
-								<TableCell>
-									<Button aria-describedby={id} variant="contained" onClick={handleClick}><MoreVertIcon/></Button>
-									<Popover
-										className={classes.popver}
-										id={id}
-										open={open}
-										anchorEl={anchorEl}
-										onClose={handleClose}
-										anchorOrigin={{
-										  vertical: 'bottom',
-										  horizontal: 'left'
-										}}
-									>
-										<Typography sx={{ padding: '1px 10px' }}><EditNoteIcon/> Edit</Typography>
-									</Popover>
-								</TableCell>
-							</TableRow>
-							<TableRow>
-								<TableCell>Fantastic</TableCell>
-								<TableCell>Yes</TableCell>
-								<TableCell>
-									<Button aria-describedby={id} variant="contained" onClick={handleClick}><MoreVertIcon/></Button>
-									<Popover
-										className={classes.popver}
-										id={id}
-										open={open}
-										anchorEl={anchorEl}
-										onClose={handleClose}
-										anchorOrigin={{
-										  vertical: 'bottom',
-										  horizontal: 'left'
-										}}
-									>
-										<Typography sx={{ padding: '1px 10px' }}><EditNoteIcon/> Edit</Typography>
-									</Popover>
-								</TableCell>
-							</TableRow>
-							<TableRow>
-								<TableCell>Fantastic</TableCell>
-								<TableCell>Yes</TableCell>
-								<TableCell>
-									<Button aria-describedby={id} variant="contained" onClick={handleClick}><MoreVertIcon/></Button>
-									<Popover
-										className={classes.popver}
-										id={id}
-										open={open}
-										anchorEl={anchorEl}
-										onClose={handleClose}
-										anchorOrigin={{
-										  vertical: 'bottom',
-										  horizontal: 'left'
-										}}
-									>
-										<Typography sx={{ padding: '1px 10px' }}><EditNoteIcon/> Edit</Typography>
-									</Popover>
-								</TableCell>
-							</TableRow>
-							<TableRow>
-								<TableCell>Fantastic</TableCell>
-								<TableCell>Yes</TableCell>
-								<TableCell>
-									<Button aria-describedby={id} variant="contained" onClick={handleClick}><MoreVertIcon/></Button>
-									<Popover
-										className={classes.popver}
-										id={id}
-										open={open}
-										anchorEl={anchorEl}
-										onClose={handleClose}
-										anchorOrigin={{
-										  vertical: 'bottom',
-										  horizontal: 'left'
-										}}
-									>
-										<Typography sx={{ padding: '1px 10px' }}><EditNoteIcon/> Edit</Typography>
-									</Popover>
-								</TableCell>
-							</TableRow>
-							<TableRow>
-								<TableCell>Fantastic</TableCell>
-								<TableCell>Yes</TableCell>
-								<TableCell>
-									<Button aria-describedby={id} variant="contained" onClick={handleClick}><MoreVertIcon/></Button>
-									<Popover
-										className={classes.popver}
-										id={id}
-										open={open}
-										anchorEl={anchorEl}
-										onClose={handleClose}
-										anchorOrigin={{
-										  vertical: 'bottom',
-										  horizontal: 'left'
-										}}
-									>
-										<Typography sx={{ padding: '1px 10px' }}><EditNoteIcon/> Edit</Typography>
-									</Popover>
-								</TableCell>
-							</TableRow>
-							<TableRow>
-								<TableCell>Fantastic</TableCell>
-								<TableCell>Yes</TableCell>
-								<TableCell>
-									<Button aria-describedby={id} variant="contained" onClick={handleClick}><MoreVertIcon/></Button>
-									<Popover
-										className={classes.popver}
-										id={id}
-										open={open}
-										anchorEl={anchorEl}
-										onClose={handleClose}
-										anchorOrigin={{
-										  vertical: 'bottom',
-										  horizontal: 'left'
-										}}
-									>
-										<Typography sx={{ padding: '1px 10px' }}><EditNoteIcon/> Edit</Typography>
-									</Popover>
-								</TableCell>
-							</TableRow>
-						</TableBody>
-					</Table>
-					<Stack sx={{ textAlign: 'center', alignItems: 'center' }}>
-						<Pagination className={classes.pagination} count={10} shape="rounded"/>
-					</Stack>
-				</Box>
-			</AdminLayout>
-		</>
+        <AdminLayout>
+            <Typography fontWeight={'bold'} variant={'h5'}
+                        sx={{ marginLeft: '120px', marginBottom: '20px' }}>Categories</Typography>
+            <Box className={classes.container}>
+                <Table className={classes.tableWrapper}>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>Title</TableCell>
+                            <TableCell>Created At</TableCell>
+                            <TableCell>
+                                <Button aria-describedby={id} variant="contained"
+                                        onClick={handleClick}><MoreVertIcon/></Button>
+                                <Popover
+                                    className={classes.popver}
+                                    id={id}
+                                    open={open}
+                                    anchorEl={anchorEl}
+                                    onClose={handleClose}
+                                    anchorOrigin={{
+                                      vertical: 'bottom',
+                                      horizontal: 'left'
+                                    }}
+                                >
+                                    <Typography sx={{ padding: '1px 10px' }}><EditNoteIcon/> Edit</Typography>
+                                </Popover>
+                            </TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {categories.map(category => <TableRow key={category._id}>
+                            <TableCell>{category.name}</TableCell>
+                            <TableCell>{moment(category.createdAt).format('DD/MM/YYYY HH:mm')}</TableCell>
+                            <TableCell>
+                                <Button aria-describedby={id} variant="contained"
+                                        onClick={handleClick}><MoreVertIcon/></Button>
+                                <Popover
+                                    className={classes.popver}
+                                    id={id}
+                                    open={open}
+                                    anchorEl={anchorEl}
+                                    onClose={handleClose}
+                                    anchorOrigin={{
+                                      vertical: 'bottom',
+                                      horizontal: 'left'
+                                    }}
+                                >
+                                    <Typography sx={{ padding: '1px 10px' }}><EditNoteIcon/> Edit</Typography>
+                                </Popover>
+                            </TableCell>
+                        </TableRow>)}
+                    </TableBody>
+                </Table>
+                <Stack sx={{ textAlign: 'center', alignItems: 'center' }}>
+                    <Pagination className={classes.pagination}
+                                count={data?.data.total_pages}
+                                shape="rounded"
+                                page={page}
+                                onChange={(_, _page) => { setPage(_page) }}/>
+                </Stack>
+            </Box>
+        </AdminLayout>
   )
 }
