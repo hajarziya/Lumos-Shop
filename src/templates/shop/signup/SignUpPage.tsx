@@ -2,15 +2,13 @@ import { Box, Divider, TextField, Typography, FormControlLabel, Checkbox, Button
 import React from 'react'
 import useStyles from '@src/templates/shop/signup/SignUpPage.styles'
 import Link from 'next/link'
+import { Appbar } from '@src/components/shop/appbar/Appbar'
 
 export function SignUpPage () {
   const { classes } = useStyles()
   return (
       <>
-      <Box className={classes.container}>
-          <Typography variant="h3" fontWeight="bold">Lumos</Typography>
-      </Box>
-          <Divider/>
+          <Appbar/>
       <Box className={classes.wrapper}>
           <Typography variant="h3">Creat your Account</Typography>
           <Box className={classes.wrapperTextFildFirst}>

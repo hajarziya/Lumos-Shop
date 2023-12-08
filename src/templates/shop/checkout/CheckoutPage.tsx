@@ -1,13 +1,13 @@
 import { AppBar, Box, Button, Checkbox, Divider, FormControlLabel, Paper, TextField, Typography } from '@mui/material'
 import useStyles from './CheckoutPage.styles'
 import CardMedia from '@mui/material/CardMedia'
+import { Appbar } from '@src/components/shop/appbar'
 
 export function CheckoutPage () {
   const { classes } = useStyles()
   return (<>
-			<AppBar className={classes.header}>
-				<Typography className={classes.logo} variant="h2">Lumos</Typography>
-			</AppBar>
+
+		  <Appbar/>
 			<Box className={classes.countainer}>
 				<Box className={classes.wrapperForm}>
 					<Typography fontWeight={'bold'} variant="h4">Shipping Address</Typography>
