@@ -19,5 +19,9 @@ export default makeStyles()((theme) => ({
     width: '70%',
     borderRadius: '12px',
     padding: '10px'
+  },
+  btnFilter: {
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.secondary.main
   }
 }))

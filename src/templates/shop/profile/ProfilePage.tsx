@@ -2,14 +2,13 @@ import { Box, CardMedia, Divider, Typography, Card, Table, TableCell, TableRow, 
 import useStyles from '@src/templates/shop/profile/ProfilePage.styles'
 import React from 'react'
 import Link from 'next/link'
+import { Appbar } from '@src/components/shop/appbar/Appbar'
 
 export function ProfilePage () {
   const { classes } = useStyles()
   return (
       <>
-      <Box className={classes.container}>
-        <Typography variant="h3" fontWeight="bold">Lumos</Typography>
-      </Box>
+     <Appbar/>
   <Divider/>
         <Box className={classes.card}>
             <CardMedia

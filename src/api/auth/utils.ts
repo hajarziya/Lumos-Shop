@@ -1,6 +1,6 @@
 import axios from '../config/axios'
-import { type AuthLogin } from '@src/api/interface'
+import { IAuthLogin } from '@src/api/interface'
 
-export const login = (data: AuthLogin['payload']) => {
-  return axios.post<AuthLogin['response']>('/auth/login', data)
+export const login = (data: IAuthLogin['payload']) => {
+  return axios.post<IAuthLogin['response']>('/auth/login', data)
 }

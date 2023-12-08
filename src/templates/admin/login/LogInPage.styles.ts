@@ -7,16 +7,22 @@ export default makeStyles()((theme) => ({
     flexDirection: 'column',
     gap: '40px',
     backgroundColor: theme.palette.secondary.main,
-    width: '25%',
+    width: '300px',
     alignItems: 'center',
     margin: '100px auto',
     padding: '50px 30px',
-    borderRadius: '15px'
+    borderRadius: '15px',
+    textAlign: 'center'
   },
   appBar: {
-    padding: '15px',
     backgroundColor: theme.palette.secondary.main,
-    color: '#2b2d42'
-
+    height: '100px'
+  },
+  logo: {
+    paddingTop: '10px',
+    paddingLeft: '40px',
+    color: theme.palette.primary.dark,
+    fontWeight: 'bold'
   }
+
 }))

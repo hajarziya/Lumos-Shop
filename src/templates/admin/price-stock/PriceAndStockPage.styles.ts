@@ -1,24 +1,22 @@
 import { makeStyles } from '@src/theme'
 
 export default makeStyles()((theme) => ({
+  tableWrapper: {
+    backgroundColor: theme.palette.secondary.main,
+    borderRadius: '12px',
+    padding: '20px',
+    width: '80%',
+    paddingLeft: '30px'
+  },
   container: {
     display: 'flex',
-    gap: '30px'
-  },
-  form: {
-    backgroundColor: theme.palette.secondary.main,
-    padding: '20px',
-    width: '30%',
-    display: 'flex',
+    justifyContent: 'center',
     flexDirection: 'column',
-    gap: '40px',
-    borderRadius: '12px'
+    alignItems: 'center',
+    gap: '20px'
   },
-  table: {
-    backgroundColor: theme.palette.secondary.main,
-    width: '70%',
-    borderRadius: '12px',
-    padding: '10px'
+  pagination: {
+    color: theme.palette.primary.main
   },
   popver: {
     alignItems: 'center',
@@ -31,15 +29,11 @@ export default makeStyles()((theme) => ({
     alignItems: 'center',
     textAlign: 'center',
     justifyContent: 'space-between',
-    marginLeft: '-100px'
-
+    marginRight: '120px'
   },
   btn: {
     backgroundColor: theme.palette.primary.main,
     color: theme.palette.secondary.main
-  },
-  btnFilter: {
-    backgroundColor: theme.palette.primary.main,
-    color: theme.palette.secondary.main
   }
+
 }))

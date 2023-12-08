@@ -5,6 +5,7 @@ import GroupAddIcon from '@mui/icons-material/GroupAdd'
 import CategoryIcon from '@mui/icons-material/Category'
 import FormatListBulletedRoundedIcon from '@mui/icons-material/FormatListBulletedRounded'
 import ListAltRoundedIcon from '@mui/icons-material/ListAltRounded'
+import ShowChartIcon from '@mui/icons-material/ShowChart'
 import React, { useCallback } from 'react'
 import { useRouter } from 'next/router'
 
@@ -59,6 +60,14 @@ export function Sidebar () {
 							<ListAltRoundedIcon/>
 						</ListItemIcon>
 						<ListItemText primary="Sub Categories"/>
+					</ListItemButton>
+				</ListItem>
+				<ListItem disablePadding>
+					<ListItemButton onClick={() => { onMenuClick('/price-stock') }}>
+						<ListItemIcon>
+							<ShowChartIcon/>
+						</ListItemIcon>
+						<ListItemText primary="Price & Stock"/>
 					</ListItemButton>
 				</ListItem>
 			</List>

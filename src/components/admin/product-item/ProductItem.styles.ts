@@ -2,13 +2,14 @@ import { makeStyles } from '@src/theme'
 
 export default makeStyles()((theme) => ({
   card: {
-    backgroundColor: theme.palette.secondary.main
+    backgroundColor: theme.palette.secondary.main,
+    width: '25%'
   },
   img: {
     width: '180px',
     height: '180px',
     borderRadius: '50%',
-    marginLeft: '14px',
+    margin: 'auto',
     marginBottom: '25px'
   }
 }))
