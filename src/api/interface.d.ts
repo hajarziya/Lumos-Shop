@@ -52,7 +52,8 @@ export interface IProduct {
 
 export interface IUser {
   _id: string
-  firstName: string
+  firstname: string
+  lastname: string
   address: string
   active: string
   createdAt: string
@@ -94,11 +95,7 @@ export interface IProductsApi {
 
 export interface IOrder {
   _id: string
-  user: {
-    _id: string
-    firstname: string
-    lastname: string
-  }
+  user: IUser
   products: IProduct[]
   totalPrice: number
   deliveryDate: string
@@ -125,7 +122,7 @@ export interface IUsersApi {
   }
   response: {
     data: IApiResponse<{
-      orders: IUser[]
+      users: IUser[]
     }>
   }
 }

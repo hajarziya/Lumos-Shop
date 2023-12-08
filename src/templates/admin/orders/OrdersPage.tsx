@@ -60,8 +60,10 @@ export function OrdersPage () {
                         exclusive
                         value={deliveryStatus ? 'delivered' : 'inProgress'}
                         onChange={handleChange}
+
                     >
-                        <ToggleButton value="delivered">Delivered</ToggleButton>
+                        <ToggleButton
+                            value="delivered">Delivered</ToggleButton>
                         <ToggleButton value="inProgress">In Progress</ToggleButton>
                     </ToggleButtonGroup>
                 </Box>
