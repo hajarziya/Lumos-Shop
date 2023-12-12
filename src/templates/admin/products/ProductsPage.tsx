@@ -3,18 +3,28 @@ import useStyles from './ProductsPage.styles'
 import { Box, Button, Pagination, Stack, TextField, Typography } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add'
 import Link from 'next/link'
-import { useCategories, useProducts } from '@src/api'
+import { useCategories, useProducts, useDeleteProduct } from '@src/api'
 import React, { useMemo, useState } from 'react'
 
 export function ProductsPage () {
   const { classes } = useStyles()
   const [page, setPage] = useState(1)
   const [selectedCategoryId, setSelectedCategoryId] = useState<string | undefined>(undefined)
-  const { data } = useProducts({ page, category: selectedCategoryId })
+  const { data, refetch } = useProducts({ page, category: selectedCategoryId })
   const products = useMemo(() => data?.data.data.products ?? [], [data])
 
   const { data: categoriesData } = useCategories({ page: 1 })
   const categories = useMemo(() => categoriesData?.data.data.categories ?? [], [categoriesData])
+
+  const deleteProductMutation = useDeleteProduct()
+  const handleDelete = async (productId: string) => {
+    try {
+      await deleteProductMutation(productId)
+      await refetch()
+    } catch (error) {
+      console.error('Error deleting product:', error)
+    }
+  }
 
   return (
 		<AdminLayout>
@@ -33,7 +43,7 @@ export function ProductsPage () {
 			</Box>
 			<Box className={classes.countentWrapper}>
 				<Box className={classes.productWrapper}>
-					{products.map(product => <ProductItem {...product} key={product._id} />)}
+					{products.map(product => <ProductItem {...product} key={product._id} onDelete={handleDelete} product={product} />)}
 				</Box>
 				<Box className={classes.categoriBtnsWrapper}>
 					<Button variant={!selectedCategoryId ? 'contained' : 'outlined'} onClick={() => { setSelectedCategoryId(undefined) }}>All</Button>

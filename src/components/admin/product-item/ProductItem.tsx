@@ -1,15 +1,35 @@
-import { Card, CardContent, CardMedia, Divider, Typography } from '@mui/material'
+import { Button, Card, CardContent, CardMedia, Divider, Typography } from '@mui/material'
 import useStyles from './ProductItem.styles'
 import EditNoteIcon from '@mui/icons-material/EditNote'
 import { IProduct } from '@src/api/interface'
+import { DeleteOutline } from '@mui/icons-material'
+import { useDeleteProduct } from '@src/api'
 
-export function ProductItem (product: IProduct) {
+interface ProductItemProps {
+  product: IProduct
+  onDelete: (productId: string) => void
+}
+
+export function ProductItem ({ product, onDelete }: ProductItemProps) {
   const { classes } = useStyles()
+  const deleteProductMutation = useDeleteProduct()
+
+  const handleDelete = async (productId: string) => {
+    try {
+      await deleteProductMutation(productId)
+      onDelete(productId) // Invoke the onDelete prop passed from the parent component
+    } catch (error) {
+      console.error('Error deleting product:', error)
+    }
+  }
 
   return (
         <>
              <Card className={classes.card} key={product._id}>
                 <EditNoteIcon sx={{ margin: '5px' }}/>
+                 <Button onClick={() => handleDelete(product._id)}>
+                     <DeleteOutline/>
+                 </Button>
                 <CardMedia
                     component="img"
                     height="194"
