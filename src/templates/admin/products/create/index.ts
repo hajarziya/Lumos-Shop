@@ -1,1 +1,1 @@
-export * from './AddProductPage'
+export * from './AddAndEditModal'

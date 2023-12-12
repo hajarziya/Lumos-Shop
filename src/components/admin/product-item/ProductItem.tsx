@@ -1,35 +1,54 @@
-import { Button, Card, CardContent, CardMedia, Divider, Typography } from '@mui/material'
+import { Button, Card, CardContent, CardMedia, Divider, Popover, Stack, Typography } from '@mui/material'
 import useStyles from './ProductItem.styles'
 import EditNoteIcon from '@mui/icons-material/EditNote'
 import { IProduct } from '@src/api/interface'
+import { useDeleteProductMutation } from '@src/api'
+import MoreVertIcon from '@mui/icons-material/MoreVert'
+import React from 'react'
 import { DeleteOutline } from '@mui/icons-material'
-import { useDeleteProduct } from '@src/api'
 
 interface ProductItemProps {
+  onRefresh: () => void
   product: IProduct
-  onDelete: (productId: string) => void
 }
-
-export function ProductItem ({ product, onDelete }: ProductItemProps) {
+export function ProductItem ({ onRefresh, product }: ProductItemProps) {
   const { classes } = useStyles()
-  const deleteProductMutation = useDeleteProduct()
 
-  const handleDelete = async (productId: string) => {
-    try {
-      await deleteProductMutation(productId)
-      onDelete(productId) // Invoke the onDelete prop passed from the parent component
-    } catch (error) {
-      console.error('Error deleting product:', error)
-    }
+  const { mutate } = useDeleteProductMutation(product._id, { onSuccess: () => { onRefresh() } })
+  const handleDelete = () => {
+    mutate(product._id)
   }
+  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null)
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget)
+  }
+  const handleClose = () => {
+    setAnchorEl(null)
+  }
+  const open = Boolean(anchorEl)
+  const id = <MoreVertIcon/> ? 'Edit' : undefined
 
   return (
         <>
-             <Card className={classes.card} key={product._id}>
-                <EditNoteIcon sx={{ margin: '5px' }}/>
-                 <Button onClick={() => handleDelete(product._id)}>
-                     <DeleteOutline/>
-                 </Button>
+            <Card className={classes.card} key={product._id}>
+                <Button aria-describedby={id} variant="contained" onClick={handleClick}><MoreVertIcon/></Button>
+                <Popover
+                    // className={classes.popver}
+                    id={id}
+                    open={open}
+                    anchorEl={anchorEl}
+                    onClose={handleClose}
+                    anchorOrigin={{
+                      vertical: 'bottom',
+                      horizontal: 'left'
+                    }}
+                >
+                    <Stack gap={1} p={1}>
+                        <Button onClick={handleDelete} startIcon={<DeleteOutline/>}>delete</Button>
+                        <Button startIcon={<EditNoteIcon sx={{ margin: '5px' }}/>}>Edit</Button>
+                    </Stack>
+                </Popover>
                 <CardMedia
                     component="img"
                     height="194"

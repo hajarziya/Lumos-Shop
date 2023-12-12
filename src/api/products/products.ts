@@ -1,5 +1,5 @@
-import { useQuery } from 'react-query'
-import { UseQueryOptions } from '@src/api/config/types'
+import { useMutation, useQuery } from 'react-query'
+import { UseMutationOptions, UseQueryOptions } from '@src/api/config/types'
 import { deleteProduct, fetchProducts } from './utils'
 import { IProductsApi } from '@src/api/interface'
 
@@ -7,8 +7,9 @@ export const useProducts = (params: IProductsApi['params'], options?: UseQueryOp
   return useQuery(['useProducts', params], () => fetchProducts(params), options)
 }
 
-export const useDeleteProduct = () => {
-  return async (_id: string) => {
-    await deleteProduct(_id)
-  }
+export const useDeleteProductMutation = (id: string, options?: UseMutationOptions<typeof deleteProduct>) => {
+  return useMutation({
+    mutationFn: () => deleteProduct(id),
+    ...options
+  })
 }

@@ -9,5 +9,5 @@ export const fetchProducts = (params: IProductsApi['params']) =>
     }
   })
 
-export const deleteProduct = (_id: string) =>
-  axios.delete<IProductsApi['response']>(`/products/${_id}`)
+export const deleteProduct = (id: string) =>
+  axios.delete(`/products/${id}`)
