@@ -1,5 +1,5 @@
 import axios from '@src/api/config/axios'
-import { IProductsApi } from '@src/api/interface'
+import { IProductsApi, ICreateProduct } from '@src/api/interface'
 
 export const fetchProducts = (params: IProductsApi['params']) =>
   axios.get<IProductsApi['response']>('/products', {
@@ -11,3 +11,6 @@ export const fetchProducts = (params: IProductsApi['params']) =>
 
 export const deleteProduct = (id: string) =>
   axios.delete(`/products/${id}`)
+
+export const createProduct = (data: ICreateProduct['body']) =>
+  axios.post<ICreateProduct['response']>('/products', data)

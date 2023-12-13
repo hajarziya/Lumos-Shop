@@ -20,24 +20,26 @@ interface AddAndEditModalProps {
   modalOpen: boolean
   onClose: () => void
   isEdit: boolean
+  onAddProduct: () => void
 }
 
-export function AddAndEditModal ({ modalOpen, onClose, isEdit }: AddAndEditModalProps) {
+export function AddAndEditModal ({ modalOpen, onClose, isEdit, onAddProduct }: AddAndEditModalProps) {
   const { classes } = useStyles()
   const [open, setOpen] = useState(false)
   const handleOpen = () => { setOpen(true) }
   const handleClose = () => { setOpen(false) }
+
   return (
       <>
-       <Button onClick={handleOpen}>Open modal</Button>
+       <Button className={classes.addBtn} onClick={handleOpen}>Open modal</Button>
         <Modal open={open}
                onClose={handleClose}
                aria-label="hello"
                aria-describedby="hello hajar"
+               className={classes.modal}
                >
                       <Box className={classes.container}>
                            <Box>
-                                <Typography variant={'h5'}>images</Typography>
                                 <CardMedia
                                     component="img"
                                     alt="green iguana"
@@ -46,8 +48,8 @@ export function AddAndEditModal ({ modalOpen, onClose, isEdit }: AddAndEditModal
                                 />
                             </Box>
                             <Box>
-                                <TextField label={'Name'}></TextField>
-                                <Box sx={{ display: 'flex', gap: '10px', margin: '20px 0' }}>
+                                <TextField className={classes.textFieldName} label={'Name'}></TextField>
+                                <Box sx={{ display: 'flex', gap: '30px', margin: '20px 0' }}>
                                 <TextField label={'Description'}></TextField>
                                 <TextField label={'Price'}></TextField>
                                 </Box>
@@ -69,7 +71,7 @@ export function AddAndEditModal ({ modalOpen, onClose, isEdit }: AddAndEditModal
                                     <FormControlLabel required control={<Checkbox />} label="Enable" />
                                     <FormControlLabel required control={<Checkbox />} label="Disable" />
                                 </Box>
-                                <Button className={classes.btn}>Add product</Button>
+                                <Button className={classes.btn} onClick={onAddProduct}>Add product</Button>
                             </Box>
                         </Box>
         </Modal>

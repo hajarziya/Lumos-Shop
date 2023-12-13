@@ -5,6 +5,7 @@ import AddIcon from '@mui/icons-material/Add'
 import Link from 'next/link'
 import { useCategories, useProducts } from '@src/api'
 import React, { useMemo, useState } from 'react'
+import { AddAndEditModal } from '@src/templates/admin'
 
 export function ProductsPage () {
   const { classes } = useStyles()
@@ -16,18 +17,34 @@ export function ProductsPage () {
   const { data: categoriesData } = useCategories({ page: 1 })
   const categories = useMemo(() => categoriesData?.data.data.categories ?? [], [categoriesData])
 
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const handleOpenModal = () => {
+    setIsModalOpen(true)
+  }
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false)
+  }
+
+  const handleAddProduct = () => {
+    handleCloseModal()
+  }
+
   return (
 		<AdminLayout>
 			<Box className={classes.header}>
 				<Typography variant={'h5'} fontWeight={'bold'}>Products</Typography>
 				<TextField size="small" placeholder="Search" sx={{ width: '30rem', marginRight: '7rem' }}></TextField>
 				<Stack className={classes.addWrapper}>
-					<Link href='/admin/products/create'>
-					<Button className={classes.addBtn}>
+					<Box className={classes.addBtnWrapper}>
+						<AddAndEditModal
+							modalOpen={isModalOpen}
+							onClose={handleCloseModal}
+							isEdit={false}
+							onAddProduct={handleAddProduct}
+						/>
 						<AddIcon/>
-						<Typography sx={{ marginLeft: '5px', fontSize: '10px' }}>Add Product</Typography>
-					</Button>
-					</Link>
+					</Box>
 					<Typography fontWeight={'bold'}>Use tags to filter your search</Typography>
 				</Stack>
 			</Box>
@@ -52,6 +69,7 @@ export function ProductsPage () {
 							page={page}
 							onChange={(_, _page) => { setPage(_page) }}/>
 			</Stack>
+
 		</AdminLayout>
   )
 }
