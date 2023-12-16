@@ -127,7 +127,7 @@ export interface IUsersApi {
   }
 }
 
-export interface ICreateProduct {
+export interface ICreateProductApi {
   body: formData
   response: { data: IProduct }
 }

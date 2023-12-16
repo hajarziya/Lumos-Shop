@@ -7,30 +7,38 @@ export default makeStyles()((theme) => ({
     backgroundColor: theme.palette.secondary.main,
     width: '70%',
     padding: '40px',
-    borderRadius: '8px'
+    borderRadius: '8px',
+    paddingTop: '80px',
+    margin: 'auto'
   },
   modal: {
     display: 'flex',
     justifyContent: 'center',
-    height: '70%',
-    marginTop: '100px'
+    alignItems: 'center',
+    textAlign: 'center'
 
   },
   btn: {
-    width: '415px',
+    width: '100%',
     backgroundColor: theme.palette.primary.main,
     color: theme.palette.secondary.main,
     height: '60px',
-    marginTop: '110px'
-  },
-  addBtn: {
-    backgroundColor: theme.palette.primary.main,
-    color: theme.palette.secondary.main,
-    padding: '8px 15px'
+    marginTop: '90px',
+    '&:hover': {
+      backgroundColor: theme.palette.primary.dark,
+      color: theme.palette.secondary.main
 
+    }
   },
   textFieldName: {
-    width: '420px'
+    width: '100%'
+  },
+  addImageInput: {
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.secondary.main,
+    marginTop: '10px',
+    borderRadius: '5px',
+    padding: '10px'
   }
 
 }))

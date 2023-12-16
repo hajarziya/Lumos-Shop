@@ -2,7 +2,7 @@ import { AdminLayout, ProductItem } from '@src/components/admin'
 import useStyles from './ProductsPage.styles'
 import { Box, Button, Pagination, Stack, TextField, Typography } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add'
-import Link from 'next/link'
+
 import { useCategories, useProducts } from '@src/api'
 import React, { useMemo, useState } from 'react'
 import { AddAndEditModal } from '@src/templates/admin'
@@ -18,16 +18,10 @@ export function ProductsPage () {
   const categories = useMemo(() => categoriesData?.data.data.categories ?? [], [categoriesData])
 
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const handleOpenModal = () => {
-    setIsModalOpen(true)
-  }
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false)
-  }
 
   const handleAddProduct = () => {
-    handleCloseModal()
+	  setIsModalOpen(false)
+	  refetchProducts()
   }
 
   return (
@@ -37,9 +31,10 @@ export function ProductsPage () {
 				<TextField size="small" placeholder="Search" sx={{ width: '30rem', marginRight: '7rem' }}></TextField>
 				<Stack className={classes.addWrapper}>
 					<Box className={classes.addBtnWrapper}>
+						<Button className={classes.addBtn} onClick={() => { setIsModalOpen(true) }}>Open modal</Button>
 						<AddAndEditModal
 							modalOpen={isModalOpen}
-							onClose={handleCloseModal}
+							onClose={() => { setIsModalOpen(false) }}
 							isEdit={false}
 							onAddProduct={handleAddProduct}
 						/>

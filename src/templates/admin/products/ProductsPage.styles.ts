@@ -33,6 +33,11 @@ export default makeStyles()((theme) => ({
     marginLeft: '30px',
     gap: '25px'
   },
+  addBtn: {
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.secondary.main,
+    padding: '8px 15px'
+  },
   countentWrapper: {
     display: 'flex',
     margin: '70px 0',
