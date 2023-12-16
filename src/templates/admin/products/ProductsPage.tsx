@@ -10,6 +10,7 @@ import { AddAndEditModal } from '@src/templates/admin'
 export function ProductsPage () {
   const { classes } = useStyles()
   const [page, setPage] = useState(1)
+  const [selectedEditProductId, setSelectedEditProductId] = useState<string | undefined>()
   const [selectedCategoryId, setSelectedCategoryId] = useState<string | undefined>(undefined)
   const { data, refetch: refetchProducts } = useProducts({ page, category: selectedCategoryId })
   const products = useMemo(() => data?.data.data.products ?? [], [data])
@@ -21,6 +22,7 @@ export function ProductsPage () {
 
   const handleAddProduct = () => {
 	  setIsModalOpen(false)
+	  setSelectedEditProductId(undefined)
 	  refetchProducts()
   }
 
@@ -31,11 +33,14 @@ export function ProductsPage () {
 				<TextField size="small" placeholder="Search" sx={{ width: '30rem', marginRight: '7rem' }}></TextField>
 				<Stack className={classes.addWrapper}>
 					<Box className={classes.addBtnWrapper}>
-						<Button className={classes.addBtn} onClick={() => { setIsModalOpen(true) }}>Open modal</Button>
+						<Button className={classes.addBtn} onClick={() => { setIsModalOpen(true) }}>Add Product</Button>
 						<AddAndEditModal
 							modalOpen={isModalOpen}
-							onClose={() => { setIsModalOpen(false) }}
-							isEdit={false}
+							onClose={() => {
+							  setIsModalOpen(false)
+							  setSelectedEditProductId(undefined)
+							}}
+							editId={selectedEditProductId}
 							onAddProduct={handleAddProduct}
 						/>
 						<AddIcon/>
@@ -45,7 +50,14 @@ export function ProductsPage () {
 			</Box>
 			<Box className={classes.countentWrapper}>
 				<Box className={classes.productWrapper}>
-					{products.map(product => <ProductItem product={product} key={product._id} onRefresh={() => refetchProducts()} />)}
+					{products.map(product => <ProductItem
+						product={product}
+						key={product._id}
+						onEdit={() => {
+						  setSelectedEditProductId(product._id)
+						  setIsModalOpen(true)
+						}}
+						onRefresh={() => refetchProducts()} />)}
 				</Box>
 				<Box className={classes.categoriBtnsWrapper}>
 					<Button variant={!selectedCategoryId ? 'contained' : 'outlined'} onClick={() => { setSelectedCategoryId(undefined) }}>All</Button>

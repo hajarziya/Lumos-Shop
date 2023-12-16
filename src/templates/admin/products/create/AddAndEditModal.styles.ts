@@ -30,6 +30,14 @@ export default makeStyles()((theme) => ({
 
     }
   },
+  fileBtn: {
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.secondary.main,
+    padding: '8px 15px',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
   textFieldName: {
     width: '100%'
   },

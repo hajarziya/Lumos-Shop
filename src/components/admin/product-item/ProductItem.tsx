@@ -9,9 +9,10 @@ import { DeleteOutline } from '@mui/icons-material'
 
 interface ProductItemProps {
   onRefresh: () => void
+  onEdit: () => void
   product: IProduct
 }
-export function ProductItem ({ onRefresh, product }: ProductItemProps) {
+export function ProductItem ({ onRefresh, product, onEdit }: ProductItemProps) {
   const { classes } = useStyles()
 
   const { mutate } = useDeleteProductMutation(product._id, { onSuccess: () => { onRefresh() } })
@@ -46,7 +47,7 @@ export function ProductItem ({ onRefresh, product }: ProductItemProps) {
                 >
                     <Stack gap={1} p={1}>
                         <Button onClick={handleDelete} startIcon={<DeleteOutline/>}>delete</Button>
-                        <Button startIcon={<EditNoteIcon sx={{ margin: '5px' }}/>}>Edit</Button>
+                        <Button onClick={onEdit} startIcon={<EditNoteIcon sx={{ margin: '5px' }}/>}>Edit</Button>
                     </Stack>
                 </Popover>
                 <CardMedia

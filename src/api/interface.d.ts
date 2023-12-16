@@ -93,6 +93,15 @@ export interface IProductsApi {
   }
 }
 
+export interface IProductDetailsApi {
+  params: {
+    id: string
+  }
+  response: {
+    data: IApiResponse<{ product: IProduct }>
+  }
+}
+
 export interface IOrder {
   _id: string
   user: IUser
@@ -128,6 +137,12 @@ export interface IUsersApi {
 }
 
 export interface ICreateProductApi {
+  body: formData
+  response: { data: IProduct }
+}
+
+export interface IEditProductApi {
+  params: { id: string }
   body: formData
   response: { data: IProduct }
 }
