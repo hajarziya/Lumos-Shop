@@ -1,4 +1,3 @@
-// import { AdminLayout } from '@src/components/admin'
 import {
   Box,
   CardMedia,
