@@ -73,6 +73,7 @@ export interface ICategoriesApi {
 export interface ISubCategoriesApi {
   params: {
     page: number
+    category?: string
   }
   response: {
     data: IApiResponse<{
@@ -85,6 +86,7 @@ export interface IProductsApi {
   params: {
     page: number
     category?: string
+    subcategory?: string
   }
   response: {
     data: IApiResponse<{

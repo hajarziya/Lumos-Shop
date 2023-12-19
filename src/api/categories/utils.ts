@@ -4,7 +4,7 @@ import { ICategoriesApi } from '@src/api/interface'
 export const fetchCategories = (params: ICategoriesApi['params']) =>
   axios.get<ICategoriesApi['response']>('/categories', {
     params: {
-      limit: 5,
+      limit: 13,
       ...params
     }
   })

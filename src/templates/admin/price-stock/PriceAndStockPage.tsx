@@ -31,7 +31,7 @@ export function PriceAndStockPage () {
   const [editingRow, setEditingRow] = useState<string | null>(null)
   const products = useMemo(() => data?.data.data.products ?? [], [data])
 
-  const { mutate: editProductMutation } = useEditProduct({ id: editingRow }, {
+  const { mutate: editProductMutation } = useEditProduct({ id: editingRow ?? '' }, {
     onSuccess: () => {
       setEditingRow(null)
       refetch()
@@ -86,9 +86,9 @@ export function PriceAndStockPage () {
           </Typography>
           {editingRow !== null
             ? (
-              <Box>
+                  <Box>
 
-              </Box>
+                  </Box>
               )
             : null}
         </Box>
@@ -110,18 +110,18 @@ export function PriceAndStockPage () {
                     <TableCell>
                       {editingRow === product._id
                         ? (
-                          <TextField
-                              type="number"
-                              value={editedProducts[product._id]?.price ?? product.price}
-                              onChange={(e) => {
-                                handleFieldChange(
-                                  product._id,
-                                  'price',
-                                  parseInt(e.target.value, 10)
-                                )
-                              }
-                              }
-                          />
+                              <TextField
+                                  type="number"
+                                  value={editedProducts[product._id]?.price ?? product.price}
+                                  onChange={(e) => {
+                                    handleFieldChange(
+                                      product._id,
+                                      'price',
+                                      parseInt(e.target.value, 10)
+                                    )
+                                  }
+                                  }
+                              />
                           )
                         : (
                             product.price
@@ -130,20 +130,20 @@ export function PriceAndStockPage () {
                     <TableCell>
                       {editingRow === product._id
                         ? (
-                          <TextField
-                              type="number"
-                              value={
-                                  editedProducts[product._id]?.quantity || product.quantity
-                              }
-                              onChange={(e) => {
-                                handleFieldChange(
-                                  product._id,
-                                  'quantity',
-                                  parseInt(e.target.value, 10)
-                                )
-                              }
-                              }
-                          />
+                              <TextField
+                                  type="number"
+                                  value={
+                                      editedProducts[product._id]?.quantity ?? product.quantity
+                                  }
+                                  onChange={(e) => {
+                                    handleFieldChange(
+                                      product._id,
+                                      'quantity',
+                                      parseInt(e.target.value, 10)
+                                    )
+                                  }
+                                  }
+                              />
                           )
                         : (
                             product.quantity
@@ -152,9 +152,9 @@ export function PriceAndStockPage () {
                     <TableCell>
                       {editingRow !== product._id
                         ? (
-                          <Button onClick={() => { handleEditClick(product._id) }}>
-                            Edit
-                          </Button>
+                              <Button onClick={() => { handleEditClick(product._id) }}>
+                                Edit
+                              </Button>
                           )
                         : <Stack direction="row" gap={2}>
                             <Button onClick={() => { handleCancelClick() }}>
@@ -177,7 +177,7 @@ export function PriceAndStockPage () {
           <Stack sx={{ textAlign: 'center', alignItems: 'center' }}>
             <Pagination
                 className={classes.pagination}
-                count={data?.data.total_pages || 0}
+                count={data?.data.total_pages ?? 0}
                 shape="rounded"
                 page={page}
                 onChange={(_, _page) => {
