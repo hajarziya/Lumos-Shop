@@ -1,10 +1,9 @@
 import { Appbar } from '@src/components/shop'
-import { Box, Card, Typography, CardMedia, Divider, CardContent, Button, Stack } from '@mui/material'
+import { Box, Card, Typography, CardMedia, Divider, CardContent, Button, Stack, Link } from '@mui/material'
 import { useCategories, useSubCategories, useProducts } from '@src/api' // Import useProducts hook
 import React, { useMemo, useState } from 'react'
 import { useRouter } from 'next/router'
 import useStyles from '@src/templates/shop/category/CategoryPage.styles'
-
 export function CategoryPage () {
   const { classes } = useStyles()
   const router = useRouter()
@@ -38,22 +37,26 @@ export function CategoryPage () {
                 <Box className={classes.subcategoriWrapper}>
                     {subCategories.map((subCategory) => (
                         <Card key={subCategory._id} className={classes.subcategoriCard}>
-                            <Button onClick={() => { handleSubcategoryClick(subCategory._id) }}>
+                            <Button className={classes.btnSub} onClick={() => { handleSubcategoryClick(subCategory._id) }}>
                                 {subCategory.name}
                             </Button>
                         </Card>
                     ))}
                 </Box>
-                <Stack direction="row" gap={2}>
+                <Stack direction="row" justifyContent='start' >
+
                     {products.map((product) => (
+
                         <Card className={classes.card} key={product._id}>
+                            <Link href={`/product/${product._id}`}>
                             <CardMedia
                                 component="img"
                                 height="194"
-                                image={process.env.NEXT_PUBLIC_BASE_IMAGE_URL + product.images[0]}
+                                image={product.images[0]}
                                 alt="Product Image"
                                 className={classes.img}
                             />
+                            </Link>
                             <Divider sx={{ marginInline: '15px' }} />
                             <CardContent>
                                 <Typography sx={{ lineHeight: '50px' }} fontWeight={'bold'} variant={'h6'}>
@@ -69,6 +72,7 @@ export function CategoryPage () {
                             </CardContent>
                         </Card>
                     ))}
+
                 </Stack>
             </Box>
         </>

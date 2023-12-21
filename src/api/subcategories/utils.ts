@@ -4,7 +4,7 @@ import { ISubCategoriesApi } from '@src/api/interface'
 export const fetchSubCategories = (params: ISubCategoriesApi['params']) =>
   axios.get<ISubCategoriesApi['response']>('/subCategories', {
     params: {
-      limit: 23,
+      limit: 5,
       ...params
     }
   })

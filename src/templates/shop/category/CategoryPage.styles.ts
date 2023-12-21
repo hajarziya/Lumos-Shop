@@ -3,7 +3,7 @@ import { makeStyles } from '@src/theme'
 export default makeStyles()((theme) => ({
   container: {
     width: '100%',
-    marginTop: '50px',
+    marginTop: '20px',
     color: theme.palette.primary.dark
   },
 
@@ -19,14 +19,14 @@ export default makeStyles()((theme) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: theme.palette.secondary.main
+    backgroundColor: theme.palette.primary.main
 
   },
   card: {
     backgroundColor: theme.palette.secondary.main,
     width: '20%',
     paddingTop: '30px',
-    margin: '40px auto'
+    margin: '40px'
   },
   img: {
     width: '180px',
@@ -34,5 +34,8 @@ export default makeStyles()((theme) => ({
     borderRadius: '50%',
     margin: 'auto',
     marginBottom: '25px'
+  },
+  btnSub: {
+    color: theme.palette.secondary.main
   }
 }))
