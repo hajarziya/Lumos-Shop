@@ -19,8 +19,11 @@ export default makeStyles()((theme) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: theme.palette.primary.main
-
+    cursor: 'pointer',
+    '&:hover': {
+      backgroundColor: theme.palette.primary.dark,
+      color: theme.palette.secondary.main
+    }
   },
   card: {
     backgroundColor: theme.palette.secondary.main,
@@ -34,8 +37,5 @@ export default makeStyles()((theme) => ({
     borderRadius: '50%',
     margin: 'auto',
     marginBottom: '25px'
-  },
-  btnSub: {
-    color: theme.palette.secondary.main
   }
 }))

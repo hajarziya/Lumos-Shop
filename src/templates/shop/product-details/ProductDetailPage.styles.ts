@@ -26,6 +26,7 @@ export default makeStyles()((theme) => ({
     }
   },
   textWrapper: {
+    width: '50%',
     marginTop: '70px'
   },
   likeAndQuantity: {

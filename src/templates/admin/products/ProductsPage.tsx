@@ -4,7 +4,7 @@ import { Box, Button, Pagination, Stack, TextField, Typography } from '@mui/mate
 import AddIcon from '@mui/icons-material/Add'
 
 import { useCategories, useProducts } from '@src/api'
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { AddAndEditModal } from '@src/templates/admin'
 
 export function ProductsPage () {
@@ -25,6 +25,12 @@ export function ProductsPage () {
 	  setSelectedEditProductId(undefined)
 	  refetchProducts()
   }
+
+  useEffect(() => {
+    if (data && (data.data.total_pages ?? 1) < page) {
+      setPage(data.data.total_pages ?? 1)
+    }
+  }, [data])
 
   return (
 		<AdminLayout>

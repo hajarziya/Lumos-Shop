@@ -11,7 +11,12 @@ import useStyles from './AddAndEditModal.styles'
 import { useState, ChangeEvent, useMemo, useEffect } from 'react'
 import { useForm, SubmitHandler, Controller } from 'react-hook-form'
 import { ICreateProductApi } from '@src/api/interface'
+import 'react-quill/dist/quill.snow.css'
+import dynamic from 'next/dynamic'
+
 import { useCategories, useCreateProduct, useEditProduct, useProductDetails, useSubCategories } from '@src/api'
+
+const DynamicQuill = dynamic(() => import('react-quill'), { ssr: false })
 
 interface AddAndEditModalProps {
   modalOpen: boolean
@@ -23,7 +28,7 @@ interface AddAndEditModalProps {
 export function AddAndEditModal ({ modalOpen, onClose, editId, onAddProduct }: AddAndEditModalProps) {
   const { classes } = useStyles()
   const [selectedImage, setSelectedImage] = useState<string | File | null>(null)
-  const { register, handleSubmit, setValue, reset, control } = useForm<ICreateProductApi['body']>()
+  const { register, handleSubmit, setValue, reset, control, watch } = useForm<ICreateProductApi['body']>()
 
   const { mutate: createProductMutation } = useCreateProduct({
     onSuccess: () => {
@@ -38,7 +43,9 @@ export function AddAndEditModal ({ modalOpen, onClose, editId, onAddProduct }: A
   })
 
   const { data: categoriesData } = useCategories({ page: 1 })
-  const { data: subCategoriesData } = useSubCategories({ page: 1 })
+  const selectedCategory = watch('category')
+  console.log({ selectedCategory })
+  const { data: subCategoriesData } = useSubCategories({ page: 1, category: selectedCategory })
 
   const { data: productDetails, refetch } = useProductDetails({ id: editId ?? '' }, { enabled: !!editId })
 
@@ -181,8 +188,11 @@ export function AddAndEditModal ({ modalOpen, onClose, editId, onAddProduct }: A
                                        InputLabelProps={{ shrink: !!editId || undefined }}/>
                         </Box>
 
-                        <TextField label={'Description'} fullWidth {...register('description')}
-                                   InputLabelProps={{ shrink: !!editId || undefined }}></TextField>
+                        <Controller
+                            name="description"
+                            control={control}
+                            render={({ field: { value, onChange } }) => (
+                                <DynamicQuill placeholder="Description" theme="snow" value={value} onChange={onChange}/>)}/>
 
                         <Button className={classes.btn} type="submit">Add product</Button>
                     </Box>

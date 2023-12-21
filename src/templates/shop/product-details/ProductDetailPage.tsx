@@ -18,6 +18,9 @@ import { AppLayout } from '@src/components/shop'
 import { useRouter } from 'next/router'
 import { useProductDetails } from '@src/api'
 import { useMemo, useState } from 'react'
+import 'react-quill/dist/quill.snow.css'
+import dynamic from 'next/dynamic'
+const DynamicQuill = dynamic(() => import('react-quill'), { ssr: false })
 
 export function ProductDetailPage () {
   const { classes } = useStyles()
@@ -68,7 +71,10 @@ export function ProductDetailPage () {
 					</Stack>
 					<Divider />
 					<Accordion sx={{ backgroundColor: 'transparent' }}>
-						<AccordionSummary>{productDetails?.description}</AccordionSummary>
+						<AccordionSummary>
+							<Typography component="p" dangerouslySetInnerHTML={{
+							  __html: productDetails?.description ?? ''
+							}}></Typography></AccordionSummary>
 						<AccordionDetails>
 						</AccordionDetails>
 					</Accordion>

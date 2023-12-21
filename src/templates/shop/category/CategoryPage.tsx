@@ -1,5 +1,5 @@
 import { Appbar } from '@src/components/shop'
-import { Box, Card, Typography, CardMedia, Divider, CardContent, Button, Stack, Link } from '@mui/material'
+import { Box, Card, Typography, CardMedia, Divider, CardContent, Button, Stack, Link, ButtonBase } from '@mui/material'
 import { useCategories, useSubCategories, useProducts } from '@src/api' // Import useProducts hook
 import React, { useMemo, useState } from 'react'
 import { useRouter } from 'next/router'
@@ -20,12 +20,8 @@ export function CategoryPage () {
 
   const [selectedSubcategory, setSelectedSubcategory] = useState<string | null>(null)
 
-  const { data: productsData } = useProducts({ page: 1, subcategory: selectedSubcategory ?? '' })
+  const { data: productsData } = useProducts({ page: 1, subcategory: selectedSubcategory ?? undefined })
   const products = useMemo(() => productsData?.data.data.products ?? [], [productsData])
-
-  const handleSubcategoryClick = (subcategoryId: string) => {
-    setSelectedSubcategory(subcategoryId)
-  }
 
   return (
         <>
@@ -35,12 +31,18 @@ export function CategoryPage () {
                     {selectedCategory ? selectedCategory.name : 'Category Not Found'}
                 </Typography>
                 <Box className={classes.subcategoriWrapper}>
+                    <Button className={classes.subcategoriCard}
+                            color={selectedSubcategory === null ? 'secondary' : 'primary'} onClick={() => { setSelectedSubcategory(null) }}
+                            sx={{ backgroundColor: (theme) => selectedSubcategory === null ? theme.palette.primary.main : theme.palette.secondary.main }}>
+                           All
+                    </Button>
                     {subCategories.map((subCategory) => (
-                        <Card key={subCategory._id} className={classes.subcategoriCard}>
-                            <Button className={classes.btnSub} onClick={() => { handleSubcategoryClick(subCategory._id) }}>
+                        <Button key={subCategory._id}
+                                    className={classes.subcategoriCard}
+                                    color={selectedSubcategory === subCategory._id ? 'secondary' : 'primary'} onClick={() => { setSelectedSubcategory(subCategory._id) }}
+                                    sx={{ backgroundColor: (theme) => selectedSubcategory === subCategory._id ? theme.palette.primary.main : theme.palette.secondary.main }}>
                                 {subCategory.name}
-                            </Button>
-                        </Card>
+                        </Button>
                     ))}
                 </Box>
                 <Stack direction="row" justifyContent='start' >
@@ -52,7 +54,7 @@ export function CategoryPage () {
                             <CardMedia
                                 component="img"
                                 height="194"
-                                image={product.images[0]}
+                                image={process.env.NEXT_PUBLIC_BASE_IMAGE_URL + product.images[0]}
                                 alt="Product Image"
                                 className={classes.img}
                             />

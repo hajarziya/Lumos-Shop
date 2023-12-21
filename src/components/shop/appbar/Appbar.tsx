@@ -20,8 +20,8 @@ const Appbar: React.FC = () => {
   }
 
   return (
-		<Box>
-			<AppBar position="static" color="primary" className={classes.appBar}>
+		<>
+			<AppBar position="sticky" color="primary" className={classes.appBar}>
 				<Toolbar variant="dense">
 					<IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }} className={classes.btnText}>
 						<MenuIcon/>
@@ -51,7 +51,7 @@ const Appbar: React.FC = () => {
 				</div>
 			</AppBar>
 			<DrawerCart open={isDrawerOpen} onClose={handleDrawerClose}/>
-		</Box>
+		</>
   )
 }
 
