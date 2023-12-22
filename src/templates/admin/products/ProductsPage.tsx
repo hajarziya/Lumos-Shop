@@ -2,19 +2,35 @@ import { AdminLayout, ProductItem } from '@src/components/admin'
 import useStyles from './ProductsPage.styles'
 import { Box, Button, Pagination, Stack, TextField, Typography } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add'
-import Link from 'next/link'
+
 import { useCategories, useProducts } from '@src/api'
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
+import { AddAndEditModal } from '@src/templates/admin'
 
 export function ProductsPage () {
   const { classes } = useStyles()
   const [page, setPage] = useState(1)
+  const [selectedEditProductId, setSelectedEditProductId] = useState<string | undefined>()
   const [selectedCategoryId, setSelectedCategoryId] = useState<string | undefined>(undefined)
-  const { data } = useProducts({ page, category: selectedCategoryId })
+  const { data, refetch: refetchProducts } = useProducts({ page, category: selectedCategoryId })
   const products = useMemo(() => data?.data.data.products ?? [], [data])
 
   const { data: categoriesData } = useCategories({ page: 1 })
   const categories = useMemo(() => categoriesData?.data.data.categories ?? [], [categoriesData])
+
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
+  const handleAddProduct = () => {
+	  setIsModalOpen(false)
+	  setSelectedEditProductId(undefined)
+	  refetchProducts()
+  }
+
+  useEffect(() => {
+    if (data && (data.data.total_pages ?? 1) < page) {
+      setPage(data.data.total_pages ?? 1)
+    }
+  }, [data])
 
   return (
 		<AdminLayout>
@@ -22,18 +38,32 @@ export function ProductsPage () {
 				<Typography variant={'h5'} fontWeight={'bold'}>Products</Typography>
 				<TextField size="small" placeholder="Search" sx={{ width: '30rem', marginRight: '7rem' }}></TextField>
 				<Stack className={classes.addWrapper}>
-					<Link href='/admin/products/create'>
-					<Button className={classes.addBtn}>
+					<Box className={classes.addBtnWrapper}>
+						<Button className={classes.addBtn} onClick={() => { setIsModalOpen(true) }}>Add Product</Button>
+						<AddAndEditModal
+							modalOpen={isModalOpen}
+							onClose={() => {
+							  setIsModalOpen(false)
+							  setSelectedEditProductId(undefined)
+							}}
+							editId={selectedEditProductId}
+							onAddProduct={handleAddProduct}
+						/>
 						<AddIcon/>
-						<Typography sx={{ marginLeft: '5px', fontSize: '10px' }}>Add Product</Typography>
-					</Button>
-					</Link>
+					</Box>
 					<Typography fontWeight={'bold'}>Use tags to filter your search</Typography>
 				</Stack>
 			</Box>
 			<Box className={classes.countentWrapper}>
 				<Box className={classes.productWrapper}>
-					{products.map(product => <ProductItem {...product} key={product._id} />)}
+					{products.map(product => <ProductItem
+						product={product}
+						key={product._id}
+						onEdit={() => {
+						  setSelectedEditProductId(product._id)
+						  setIsModalOpen(true)
+						}}
+						onRefresh={() => refetchProducts()} />)}
 				</Box>
 				<Box className={classes.categoriBtnsWrapper}>
 					<Button variant={!selectedCategoryId ? 'contained' : 'outlined'} onClick={() => { setSelectedCategoryId(undefined) }}>All</Button>
@@ -52,6 +82,7 @@ export function ProductsPage () {
 							page={page}
 							onChange={(_, _page) => { setPage(_page) }}/>
 			</Stack>
+
 		</AdminLayout>
   )
 }

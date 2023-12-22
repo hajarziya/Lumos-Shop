@@ -10,7 +10,7 @@ export type UseMutationOptions<
 > = BaseUseMutationOptions<Awaited<ReturnType<F>>, AxiosError, S>
 
 export type UseQueryOptions<
-	F extends (...args: any) => Promise<{ data: IApiResponse<unknown> }>,
+	F extends (...args: any) => Promise<{ data: IApiResponse<unknown> | unknown }>,
 	S = Awaited<ReturnType<F>>,
 > = BaseUseQueryOptions<Awaited<ReturnType<F>>, AxiosError, S, any>
 
