@@ -73,6 +73,7 @@ export interface ICategoriesApi {
 export interface ISubCategoriesApi {
   params: {
     page: number
+    category?: string
   }
   response: {
     data: IApiResponse<{
@@ -85,11 +86,21 @@ export interface IProductsApi {
   params: {
     page: number
     category?: string
+    subcategory?: string
   }
   response: {
     data: IApiResponse<{
       products: IProduct[]
     }>
+  }
+}
+
+export interface IProductDetailsApi {
+  params: {
+    id: string
+  }
+  response: {
+    data: IApiResponse<{ product: IProduct }>
   }
 }
 
@@ -125,4 +136,15 @@ export interface IUsersApi {
       users: IUser[]
     }>
   }
+}
+
+export interface ICreateProductApi {
+  body: formData
+  response: { data: IProduct }
+}
+
+export interface IEditProductApi {
+  params: { id: string }
+  body: formData
+  response: { data: IProduct }
 }

@@ -14,10 +14,16 @@ export default makeStyles()((theme) => ({
     width: '90%'
 
   },
-  addBtn: {
+  addBtnWrapper: {
     backgroundColor: theme.palette.primary.main,
     color: theme.palette.secondary.main,
-    padding: '8px 15px'
+    display: 'flex',
+    gap: '10px',
+    textAlign: 'center',
+    alignItems: 'center',
+    width: '220px',
+    justifyContent: 'center',
+    borderRadius: '5px'
 
   },
   addWrapper: {
@@ -26,6 +32,11 @@ export default makeStyles()((theme) => ({
     alignItems: 'center',
     marginLeft: '30px',
     gap: '25px'
+  },
+  addBtn: {
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.secondary.main,
+    padding: '8px 15px'
   },
   countentWrapper: {
     display: 'flex',
