@@ -1,6 +1,6 @@
 import { Appbar } from '@src/components/shop'
-import { Box, Card, Typography, CardMedia, Divider, CardContent, Button, Stack, Link, ButtonBase } from '@mui/material'
-import { useCategories, useSubCategories, useProducts } from '@src/api' // Import useProducts hook
+import { Box, Card, Typography, CardMedia, Divider, CardContent, Button, Stack, Link } from '@mui/material'
+import { useCategories, useSubCategories, useProducts } from '@src/api'
 import React, { useMemo, useState } from 'react'
 import { useRouter } from 'next/router'
 import useStyles from '@src/templates/shop/category/CategoryPage.styles'

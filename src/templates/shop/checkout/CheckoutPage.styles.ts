@@ -14,20 +14,21 @@ export default makeStyles()((theme) => ({
   countainer: {
     display: 'flex',
     justifyContent: 'space-between',
-    margin: '200px 100px',
+    margin: '50px',
     color: theme.palette.primary.dark
   },
   wrapperForm: {
     display: 'flex',
     flexDirection: 'column',
     gap: '10px',
-    width: '450px',
+    width: '50%',
     justifyContent: 'center'
 
   },
   paper: {
     padding: '30px',
-    backgroundColor: 'transparent'
+    backgroundColor: 'transparent',
+    width: '30%'
   },
   itemPriceWrapper: {
     display: 'flex',
@@ -48,5 +49,9 @@ export default makeStyles()((theme) => ({
     justifyContent: 'end',
     marginTop: '20px'
 
+  },
+  total: {
+    color: theme.palette.primary.main
   }
+
 }))

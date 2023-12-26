@@ -148,3 +148,29 @@ export interface IEditProductApi {
   body: formData
   response: { data: IProduct }
 }
+
+export interface IAddToCartApi {
+  payload: {
+    user: string
+    products: Array<{
+      product: string
+      count: number
+    }>
+    deliveryStatus: boolean
+  }
+  response: {
+    data: any
+  }
+}
+
+export interface IAuthSginUp {
+  payload: {
+    firstname: string
+    lastname: string
+    username: string
+    password: string
+    address: string
+    phoneNumber: string
+  }
+  response: any
+}

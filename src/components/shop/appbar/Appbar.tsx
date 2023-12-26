@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { AppBar, Box, Button, IconButton, TextField, Toolbar, Typography, Link } from '@mui/material'
+import { AppBar, Button, IconButton, TextField, Toolbar, Typography, Link } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
