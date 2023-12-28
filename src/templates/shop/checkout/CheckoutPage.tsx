@@ -2,23 +2,47 @@ import { Box, Button, Checkbox, Divider, FormControlLabel, Paper, TextField, Typ
 import useStyles from './CheckoutPage.styles'
 import CardMedia from '@mui/material/CardMedia'
 import { Appbar } from '@src/components/shop/appbar'
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { IProduct } from '@src/api/interface'
 import { useCreateOrder, useSignup } from '@src/api'
-import { SingupSchema } from './validation'
+import { SignupSchema } from './validation'
+import { useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { useRouter } from 'next/router'
+import { generateTrackingNumber } from '@src/templates/shop/checkout/utils'
+import { useSearchParams } from 'next/navigation'
+import { SuccessModal, FailModal } from '@src/templates/shop/checkout/Modal'
 
 export function CheckoutPage () {
   const { classes } = useStyles()
+  const { push } = useRouter()
+  const searchParams = useSearchParams()
+  const tn = searchParams.get('tn')
+  const result = searchParams.get('result')
   const [cartItems, setCartItems] = useState<IProduct[]>([])
+  const [showSuccessModal, setShowSuccessModal] = useState(false)
+  const [showFailModal, setShowFailModal] = useState(false)
+
   useEffect(() => {
     const cart = JSON.parse(localStorage.getItem('cart') ?? '[]')
     setCartItems(cart)
   }, [])
+
   const calculateTotalPrice = () => {
     return cartItems.reduce((total, item) => total + item.price, 0)
   }
-  const { mutate: createOrder } = useCreateOrder()
-  const { mutate: createUser, isLoading } = useSignup({
+  const { mutate: createOrder, isLoading: isCompletingOrder } = useCreateOrder({
+    onSuccess: () => {
+      localStorage.removeItem('cart')
+      localStorage.removeItem(tn as string)
+      setShowSuccessModal(true)
+    },
+    onError: () => {
+      setShowFailModal(true)
+    }
+  })
+
+  const { mutate: createUser, isLoading: isCreatingUser } = useSignup({
     onSuccess: (response) => {
       if (response.data.status === 'success') {
         localStorage.setItem('user_token', response.data.token.accessToken)
@@ -34,109 +58,175 @@ export function CheckoutPage () {
       }
     }
   })
-  return (<>
+  const { handleSubmit, register, formState: { errors } } = useForm({
+    resolver: yupResolver(SignupSchema)
+  })
 
+  const onSignup = handleSubmit(({ username, password, firstname, lastname, phoneNumber, address }) => {
+    const trackingNumber = generateTrackingNumber()
+
+    localStorage.setItem(trackingNumber, JSON.stringify({
+      userInfo: {
+        username,
+        address,
+        password,
+        firstname,
+        lastname,
+        phoneNumber
+      },
+      cart: cartItems
+    }))
+    push('http://localhost:3001/payment/' + trackingNumber)
+  })
+
+  useEffect(() => {
+    console.log({ tn }, { result })
+    if (tn && result) {
+      if (result === 'success') {
+        const orderInfo = JSON.parse(localStorage.getItem(tn) ?? '{}')
+        if (orderInfo.userInfo) {
+          createUser({
+            username: orderInfo.userInfo.username,
+            address: orderInfo.userInfo.address,
+            password: orderInfo.userInfo.password,
+            firstname: orderInfo.userInfo.firstname,
+            lastname: orderInfo.userInfo.lastname,
+            phoneNumber: orderInfo.userInfo.phoneNumber
+          })
+        }
+      } else if (result === 'fail') {
+        setShowFailModal(true)
+      }
+    }
+  }, [tn, result])
+
+  return (<>
             <Appbar/>
             <Box className={classes.countainer}>
-                <Box className={classes.wrapperForm}>
-                    <Typography fontWeight={'bold'} variant="h4">Shipping Address</Typography>
-                    <Box width={'100%'} gap={'10px'} display={'flex'} justifyContent={'space-between'}>
-                        <TextField
-                            id="outlined-multiline-flexible"
-                            label="username"
-                            multiline
-                            maxRows={4}
-                            fullWidth
+                {!showSuccessModal && !showFailModal && (
+                    <>
+                        <form onSubmit={onSignup} className={classes.wrapperForm}>
+                            <Typography fontWeight={'bold'} variant="h4">Shipping Address</Typography>
+                            <Box width={'100%'} gap={'10px'} display={'flex'} justifyContent={'space-between'}>
+                                <TextField
+                                    id="outlined-multiline-flexible"
+                                    label="username"
+                                    multiline
+                                    maxRows={4}
+                                    fullWidth
+                                    {...register('username')}
 
-                        />
-                        <TextField
-                            id="outlined-multiline-flexible"
-                            label="Password"
-                            multiline
-                            maxRows={4}
-                            fullWidth
-                        />
-                    </Box>
-                    <Box width={'100%'} gap={'10px'} display={'flex'} justifyContent={'space-between'}>
-                        <TextField
-                            id="outlined-multiline-flexible"
-                            label="Firstname"
-                            multiline
-                            maxRows={4}
-                            fullWidth
+                                />
+                                {errors?.username && (
+                                    <div style={{ color: 'red' }}>{errors.username.message}</div>
+                                )}
+                                <TextField
+                                    id="outlined-multiline-flexible"
+                                    label="Password"
+                                    multiline
+                                    maxRows={4}
+                                    fullWidth
+                                    {...register('password')}
+                                />
+                                {errors?.password && (
+                                    <div style={{ color: 'red' }}>{errors.password.message}</div>
+                                )}
+                            </Box>
+                            <Box width={'100%'} gap={'10px'} display={'flex'} justifyContent={'space-between'}>
+                                <TextField
+                                    id="outlined-multiline-flexible"
+                                    label="Firstname"
+                                    multiline
+                                    maxRows={4}
+                                    fullWidth
+                                    {...register('firstname')}
 
-                        />
-                        <TextField
-                            id="outlined-multiline-flexible"
-                            label="Lastname"
-                            multiline
-                            maxRows={4}
-                            fullWidth
-                        />
-                    </Box>
-                    <TextField
-                        id="outlined-multiline-flexible"
-                        label="Address"
-                        multiline
-                        maxRows={4}
-                    />
-                    <Box width={'100%'} gap={'10px'} display={'flex'} justifyContent={'space-between'}>
-                        <TextField
-                            id="outlined-multiline-flexible"
-                            label="Phone Number"
-                            multiline
-                            maxRows={13}
-                            fullWidth
-                            helperText="Used to contact you with delivery info (mobile preferred)."
-
-                        />
-                        <TextField
-                            id="outlined-multiline-flexible"
-                            label="date arive"
-                            multiline
-                            maxRows={10}
-                            fullWidth
-                        />
-                    </Box>
-                    <Box>
-                        <FormControlLabel required control={<Checkbox/>} label="Set as default shipping address"/>
-                    </Box>
-                    <Box className={classes.saveBtnWrapper}>
-                        <Button className={classes.saveBtn}>Save & Continue</Button>
-                    </Box>
-                    <Divider/>
-
-                </Box>
-
-                <Paper elevation={8} className={classes.paper}>
-
-                    <Typography fontWeight={'bold'}>Cart Summary</Typography>
-                    <Typography fontWeight={'bold'} fontSize={'14px'}
-                                marginTop={'10px'}>{cartItems.length} Item</Typography>
-                    {cartItems.map((item: IProduct) => (
-                        <Box key={item._id}>
-                            <CardMedia sx={{ width: '100px', margin: '10px 0px' }}
-                                       component="img"
-                                       height="90px"
-                                       image={process.env.NEXT_PUBLIC_BASE_IMAGE_URL + item.images[0]}
-                                       alt="Paella dish"
+                                />
+                                {errors?.firstname && (
+                                    <div style={{ color: 'red' }}>{errors.firstname.message}</div>
+                                )}
+                                <TextField
+                                    id="outlined-multiline-flexible"
+                                    label="Lastname"
+                                    multiline
+                                    maxRows={4}
+                                    fullWidth
+                                    {...register('lastname')}
+                                />
+                                {errors?.lastname && (
+                                    <div style={{ color: 'red' }}>{errors.lastname.message}</div>
+                                )}
+                            </Box>
+                            <TextField
+                                id="outlined-multiline-flexible"
+                                label="Address"
+                                multiline
+                                maxRows={10}
+                                {...register('address')}
                             />
-                            <Divider/>
-
-                            <Box className={classes.itemPriceWrapper}>
-                                <Typography fontWeight={'bold'}>{item.name}</Typography>
-                                <Typography fontWeight={'bold'}>${item.price}</Typography>
+                            <Box width={'100%'} gap={'10px'} display={'flex'} justifyContent={'space-between'}>
+                                <TextField
+                                    id="outlined-multiline-flexible"
+                                    label="Phone Number"
+                                    multiline
+                                    maxRows={13}
+                                    fullWidth
+                                    helperText="Used to contact you with delivery info (mobile preferred)."
+                                    {...register('phoneNumber')}
+                                />
+                                {errors?.phoneNumber && (
+                                    <div style={{ color: 'red' }}>{errors.phoneNumber.message}</div>
+                                )}
+                                <TextField
+                                    id="outlined-multiline-flexible"
+                                    label="date arive"
+                                    multiline
+                                    maxRows={10}
+                                    fullWidth
+                                />
+                            </Box>
+                            <Box>
+                                <FormControlLabel control={<Checkbox/>} label="Set as default shipping address"/>
+                            </Box>
+                            <Box className={classes.saveBtnWrapper}>
+                                <Button type={'submit'} className={classes.saveBtn}>Save & Continue</Button>
                             </Box>
                             <Divider/>
 
-                        </Box>
-                    ))}
-                    <Box className={classes.itemPriceWrapper}>
-                        <Typography className={classes.total} fontWeight={'bold'}>Total</Typography>
-                        <Typography className={classes.total}
-                                    fontWeight={'bold'}>${calculateTotalPrice().toFixed(2)}</Typography>
-                    </Box>
-                </Paper>
+                        </form>
+                        <Paper elevation={8} className={classes.paper}>
+
+                            <Typography fontWeight={'bold'}>Cart Summary</Typography>
+                            <Typography fontWeight={'bold'} fontSize={'14px'}
+                                        marginTop={'10px'}>{cartItems.length} Item</Typography>
+                            {cartItems.map((item: IProduct) => (
+                                <Box key={item._id}>
+                                    <CardMedia sx={{ width: '100px', margin: '10px 0px' }}
+                                               component="img"
+                                               height="90px"
+                                               image={process.env.NEXT_PUBLIC_BASE_IMAGE_URL + item.images[0]}
+                                               alt="Paella dish"
+                                    />
+                                    <Divider/>
+
+                                    <Box className={classes.itemPriceWrapper}>
+                                        <Typography fontWeight={'bold'}>{item.name}</Typography>
+                                        <Typography fontWeight={'bold'}>${item.price}</Typography>
+                                    </Box>
+                                    <Divider/>
+
+                                </Box>
+                            ))}
+                            <Box className={classes.itemPriceWrapper}>
+                                <Typography className={classes.total} fontWeight={'bold'}>Total</Typography>
+                                <Typography className={classes.total}
+                                            fontWeight={'bold'}>${calculateTotalPrice().toFixed(2)}</Typography>
+                            </Box>
+                        </Paper>
+                    </>
+                )}
+                {showSuccessModal && <SuccessModal/>}
+                {showFailModal && <FailModal/>}
 
             </Box>
         </>

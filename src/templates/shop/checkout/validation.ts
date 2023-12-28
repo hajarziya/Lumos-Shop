@@ -1,6 +1,7 @@
 import { object, string, number } from 'yup'
 
-export const SingupSchema = object({
+export const SignupSchema = object({
+  address: string(),
   username: string().required('Username is required')
     .min(4, 'Username must be at least 4 characters')
     .max(12, 'Username must not exceed 12 characters'),
@@ -10,8 +11,8 @@ export const SingupSchema = object({
   lastname: string().required('Lastname is required')
     .min(4, 'Lastname must be at least 4 characters')
     .max(12, 'Lastname must not exceed 12 characters'),
-  phoneNumber: number().required('phoneNumber is required')
-    .min(13, 'Phone Namber must be 13 characters')
+  phoneNumber: string().required('phoneNumber is required')
+    .min(13, 'Phone Number must be 13 characters')
     .max(13, 'Phone Number must be 13 characters'),
   password: string()
     .required('Password is required')

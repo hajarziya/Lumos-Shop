@@ -16,7 +16,7 @@ import IconButton from '@mui/material/IconButton'
 import useStyles from './ProductDetailPage.styles'
 import { AppLayout } from '@src/components/shop'
 import { useRouter } from 'next/router'
-import { useCartMutation, useProductDetails } from '@src/api'
+import { useCreateOrder, useProductDetails } from '@src/api'
 import { useCallback, useMemo, useState } from 'react'
 import { IProduct } from '@src/api/interface'
 
@@ -39,7 +39,7 @@ export function ProductDetailPage () {
     }
   }
 
-  const { mutate } = useCartMutation()
+  const { mutate } = useCreateOrder()
 
   const onAddToCart = useCallback(() => {
     const existingCart: Array<Partial<IProduct>> = JSON.parse(localStorage.getItem('cart') ?? '[]')
