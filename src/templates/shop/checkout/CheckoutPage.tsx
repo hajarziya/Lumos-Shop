@@ -108,6 +108,7 @@ export function CheckoutPage () {
                         <form onSubmit={onSignup} className={classes.wrapperForm}>
                             <Typography fontWeight={'bold'} variant="h4">Shipping Address</Typography>
                             <Box width={'100%'} gap={'10px'} display={'flex'} justifyContent={'space-between'}>
+                              <Box width={'50%'}>
                                 <TextField
                                     id="outlined-multiline-flexible"
                                     label="username"
@@ -118,8 +119,10 @@ export function CheckoutPage () {
 
                                 />
                                 {errors?.username && (
-                                    <div style={{ color: 'red' }}>{errors.username.message}</div>
+                                    <Typography style={{ color: 'indianred', fontSize: '12px' }}>{errors.username.message}</Typography>
                                 )}
+                              </Box>
+                                <Box width={'50%'}>
                                 <TextField
                                     id="outlined-multiline-flexible"
                                     label="Password"
@@ -129,10 +132,12 @@ export function CheckoutPage () {
                                     {...register('password')}
                                 />
                                 {errors?.password && (
-                                    <div style={{ color: 'red' }}>{errors.password.message}</div>
+                                    <Typography style={{ color: 'indianred', fontSize: '12px' }}>{errors.password.message}</Typography>
                                 )}
+                                </Box>
                             </Box>
                             <Box width={'100%'} gap={'10px'} display={'flex'} justifyContent={'space-between'}>
+                              <Box width={'50%'}>
                                 <TextField
                                     id="outlined-multiline-flexible"
                                     label="Firstname"
@@ -143,8 +148,10 @@ export function CheckoutPage () {
 
                                 />
                                 {errors?.firstname && (
-                                    <div style={{ color: 'red' }}>{errors.firstname.message}</div>
+                                    <Typography style={{ color: 'indianred', fontSize: '12px' }}>{errors.firstname.message}</Typography>
                                 )}
+                              </Box>
+                              <Box width={'50%'}>
                                 <TextField
                                     id="outlined-multiline-flexible"
                                     label="Lastname"
@@ -154,8 +161,9 @@ export function CheckoutPage () {
                                     {...register('lastname')}
                                 />
                                 {errors?.lastname && (
-                                    <div style={{ color: 'red' }}>{errors.lastname.message}</div>
+                                    <Typography style={{ color: 'indianred', fontSize: '12px' }}>{errors.lastname.message}</Typography>
                                 )}
+                              </Box>
                             </Box>
                             <TextField
                                 id="outlined-multiline-flexible"
@@ -165,18 +173,20 @@ export function CheckoutPage () {
                                 {...register('address')}
                             />
                             <Box width={'100%'} gap={'10px'} display={'flex'} justifyContent={'space-between'}>
+                              <Box width={'100%'}>
                                 <TextField
                                     id="outlined-multiline-flexible"
                                     label="Phone Number"
                                     multiline
                                     maxRows={13}
                                     fullWidth
-                                    helperText="Used to contact you with delivery info (mobile preferred)."
+
                                     {...register('phoneNumber')}
                                 />
                                 {errors?.phoneNumber && (
-                                    <div style={{ color: 'red' }}>{errors.phoneNumber.message}</div>
+                                    <Typography style={{ color: 'indianred', fontSize: '12px' }}>{errors.phoneNumber.message}</Typography>
                                 )}
+                              </Box>
                                 <TextField
                                     id="outlined-multiline-flexible"
                                     label="date arive"
