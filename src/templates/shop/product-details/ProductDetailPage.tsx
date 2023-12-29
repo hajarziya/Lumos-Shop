@@ -16,17 +16,14 @@ import IconButton from '@mui/material/IconButton'
 import useStyles from './ProductDetailPage.styles'
 import { AppLayout } from '@src/components/shop'
 import { useRouter } from 'next/router'
-import { useProductDetails } from '@src/api'
-import { useMemo, useState } from 'react'
-import 'react-quill/dist/quill.snow.css'
-import dynamic from 'next/dynamic'
-const DynamicQuill = dynamic(() => import('react-quill'), { ssr: false })
+import { useCreateOrder, useProductDetails } from '@src/api'
+import { useCallback, useMemo, useState } from 'react'
+import { IProduct } from '@src/api/interface'
 
 export function ProductDetailPage () {
   const { classes } = useStyles()
   const router = useRouter()
   const { data } = useProductDetails({ id: router?.query.id as string ?? '' })
-
   const productDetails = useMemo(() => data?.data.data.product, [data])
   const [quantity, setQuantity] = useState(1)
 
@@ -41,6 +38,25 @@ export function ProductDetailPage () {
       setQuantity(quantity - 1)
     }
   }
+
+  const { mutate } = useCreateOrder()
+
+  const onAddToCart = useCallback(() => {
+    const existingCart: Array<Partial<IProduct>> = JSON.parse(localStorage.getItem('cart') ?? '[]')
+    const existingProductIndex = existingCart.findIndex(
+      (item) => item._id === productDetails?._id
+    )
+    if (existingProductIndex !== -1) {
+      existingCart[existingProductIndex].quantity = quantity + (existingCart[existingProductIndex]?.quantity ?? 0)
+    } else {
+      existingCart.push({
+        ...productDetails,
+        quantity
+      })
+    }
+    localStorage.setItem('cart', JSON.stringify(existingCart))
+    router.push('/checkout')
+  }, [quantity, productDetails, mutate])
 
   return (
 		<AppLayout>
@@ -78,7 +94,7 @@ export function ProductDetailPage () {
 						<AccordionDetails>
 						</AccordionDetails>
 					</Accordion>
-					<Button className={classes.btn}>Add To Cart</Button>
+					<Button className={classes.btn} onClick={onAddToCart}>Add To Cart</Button>
 				</Box>
 			</Box>
 		</AppLayout>
