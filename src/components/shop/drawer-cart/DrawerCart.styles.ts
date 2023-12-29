@@ -34,7 +34,10 @@ export default makeStyles()((theme) => ({
     margin: '30px auto',
     fontWeight: 'bold',
     width: '80%',
-    padding: '10px'
-
+    padding: '10px',
+    '&:hover': {
+      backgroundColor: theme.palette.primary.dark,
+      color: theme.palette.secondary.main
+    }
   }
 }))

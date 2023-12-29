@@ -41,8 +41,11 @@ export default makeStyles()((theme) => ({
     color: theme.palette.secondary.main,
     display: 'flex',
     justifyContent: 'end',
-    padding: '10px 30px'
-
+    padding: '10px 30px',
+    '&:hover': {
+      backgroundColor: theme.palette.primary.dark,
+      color: theme.palette.secondary.main
+    }
   },
   saveBtnWrapper: {
     display: 'flex',

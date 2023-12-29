@@ -20,12 +20,6 @@ export default makeStyles()((theme) => ({
     borderRadius: '12px',
     padding: '10px'
   },
-  popver: {
-    alignItems: 'center',
-    display: 'flex',
-    textAlign: 'center'
-
-  },
   titleBox: {
     display: 'flex',
     alignItems: 'center',

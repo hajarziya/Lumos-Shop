@@ -22,7 +22,7 @@ interface DrawerCartProps {
 
 export function DrawerCart ({ open, onClose }: DrawerCartProps) {
   const { classes } = useStyles()
-  const [cartItems, setCartItems] = useState([])
+  const [cartItems, setCartItems] = useState<IProduct[]>([])
   useEffect(() => {
     const cart = JSON.parse(localStorage.getItem('cart') ?? '[]')
     setCartItems(cart)
