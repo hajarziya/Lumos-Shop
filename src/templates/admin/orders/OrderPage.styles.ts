@@ -20,12 +20,6 @@ export default makeStyles()((theme) => ({
     borderRadius: '12px',
     padding: '10px'
   },
-  popver: {
-    alignItems: 'center',
-    display: 'flex',
-    textAlign: 'center'
-
-  },
   titleBox: {
     display: 'flex',
     alignItems: 'center',
@@ -41,5 +35,22 @@ export default makeStyles()((theme) => ({
   btnFilter: {
     backgroundColor: theme.palette.primary.main,
     color: theme.palette.secondary.main
+  },
+  modalContainer: {
+    padding: '30px',
+    backgroundColor: theme.palette.secondary.main,
+    width: '700px',
+    display: 'flex',
+    flexDirection: 'column'
+  },
+  topwrapper: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'start'
+  },
+  tableHead: {
+    color: theme.palette.primary.main,
+    fontWeight: 'bold'
   }
-}))
+}
+))

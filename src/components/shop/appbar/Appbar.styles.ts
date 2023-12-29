@@ -37,5 +37,4 @@ export default makeStyles()((theme) => ({
       backgroundColor: 'transparent'
     }
   }
-
 }))

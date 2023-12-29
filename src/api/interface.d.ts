@@ -55,8 +55,11 @@ export interface IUser {
   firstname: string
   lastname: string
   address: string
+  username: string
   active: string
   createdAt: string
+  updatedAt: string
+  phoneNumber: string
 }
 
 export interface ICategoriesApi {
@@ -107,7 +110,7 @@ export interface IProductDetailsApi {
 export interface IOrder {
   _id: string
   user: IUser
-  products: IProduct[]
+  products: Array<{ product: IProduct, count: number }>
   totalPrice: number
   deliveryDate: string
   deliveryStatus: boolean
@@ -147,4 +150,48 @@ export interface IEditProductApi {
   params: { id: string }
   body: formData
   response: { data: IProduct }
+}
+
+export interface IAddToCartApi {
+  payload: {
+    user: string
+    products: Array<{
+      product: string
+      count: number
+    }>
+    deliveryStatus: boolean
+  }
+  response: {
+    data: any
+  }
+}
+
+export interface IAuthSignUp {
+  payload: {
+    firstname: string
+    lastname: string
+    username: string
+    password: string
+    address?: string
+    phoneNumber: string
+  }
+  response: any
+}
+
+export interface IOrderDetails {
+  params: {
+    id: string
+  }
+  response: {
+    data: IApiResponse<{
+      order: IOrder
+    }>
+  }
+
+}
+
+export interface IEditOrderApi {
+  params: { id: string }
+  body: { deliveryStatus: boolean }
+  response: any
 }

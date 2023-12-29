@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { AppBar, Box, Button, IconButton, TextField, Toolbar, Typography, Link } from '@mui/material'
+import React, { useEffect, useState } from 'react'
+import { AppBar, Button, IconButton, TextField, Toolbar, Typography, Link, Badge } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle'
@@ -10,7 +10,11 @@ import { DrawerCart } from '../drawer-cart'
 const Appbar: React.FC = () => {
   const { classes } = useStyles()
   const [isDrawerOpen, setDrawerOpen] = useState(false)
-
+  const [cartItems, setCartItems] = useState([])
+  useEffect(() => {
+    const cart = JSON.parse(localStorage.getItem('cart') ?? '[]')
+    setCartItems(cart)
+  }, [])
   const handleDrawerOpen = () => {
     setDrawerOpen(true)
   }
@@ -44,7 +48,7 @@ const Appbar: React.FC = () => {
 							Sign in
 						</Button>
 					</Link>
-					<Button variant="text" endIcon={<ShoppingCartIcon/>} className={classes.btnText}
+					<Button variant="text" endIcon={<Badge badgeContent={cartItems.length} color="primary"><ShoppingCartIcon/></Badge>} className={classes.btnText}
 							onClick={handleDrawerOpen}>
 						Cart
 					</Button>
