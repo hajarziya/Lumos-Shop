@@ -5,11 +5,14 @@ import { Sidebar } from '../sidebar'
 export function AdminLayout ({ children }: PropsWithChildren) {
   return (
 		<>
-			<Appbar/>
+			<div style={{ position: 'fixed', width: '100%', marginTop: '-100px', height: '100vh' }}>
+			<Appbar />
 			<Sidebar/>
-			<div style={{ width: '80%', marginLeft: '250px', marginTop: '50px', height: '100vh' }}>
+			</div>
+			<div style={{ width: '80%', marginLeft: '250px', marginTop: '100px', height: '100vh' }}>
 				{children}
 			</div>
+
 		</>
   )
 }
