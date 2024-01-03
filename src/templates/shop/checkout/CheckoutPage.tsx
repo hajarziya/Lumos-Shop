@@ -28,6 +28,12 @@ export function CheckoutPage () {
     setCartItems(cart)
   }, [])
 
+  const handleDeleteFromCart = (itemId: string) => {
+    const updatedCart = cartItems.filter((item) => item._id !== itemId)
+    setCartItems(updatedCart)
+    localStorage.setItem('cart', JSON.stringify(updatedCart))
+  }
+
   const calculateTotalPrice = () => {
     return cartItems.reduce((total, item) => total + item.price, 0)
   }
@@ -210,7 +216,8 @@ export function CheckoutPage () {
                             <Typography fontWeight={'bold'} fontSize={'14px'}
                                         marginTop={'10px'}>{cartItems.length} Item</Typography>
                             {cartItems.map((item: IProduct) => (
-                                <Box key={item._id}>
+
+                                <Box key={item._id} >
                                     <CardMedia sx={{ width: '100px', margin: '10px 0px' }}
                                                component="img"
                                                height="90px"
