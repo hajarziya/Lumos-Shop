@@ -8,7 +8,7 @@ const Appbar: React.FC = () => {
   const { classes } = useStyles()
 
   return (
-		<AppBar position="sticky" color="primary" className={classes.appBar}>
+		<AppBar position="fixed" color="primary" className={classes.appBar}>
 			<Link href='/'>
 			<Button>
 			<Typography variant="h5"

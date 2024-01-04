@@ -1,9 +1,9 @@
 import { Box, Button, Checkbox, Divider, FormControlLabel, Paper, TextField, Typography } from '@mui/material'
+
 import useStyles from './CheckoutPage.styles'
 import CardMedia from '@mui/material/CardMedia'
 import { Appbar } from '@src/components/shop/appbar'
 import React, { useEffect, useState } from 'react'
-import { IProduct } from '@src/api/interface'
 import { useCreateOrder, useSignup } from '@src/api'
 import { SignupSchema } from './validation'
 import { useForm } from 'react-hook-form'
@@ -12,6 +12,8 @@ import { useRouter } from 'next/router'
 import { generateTrackingNumber } from '@src/templates/shop/checkout/utils'
 import { useSearchParams } from 'next/navigation'
 import { SuccessModal, FailModal } from '@src/templates/shop/checkout/Modal'
+import { DatePicker } from '@mui/x-date-pickers'
+import { useCartContext } from '@src/context/CartContext'
 
 export function CheckoutPage () {
   const { classes } = useStyles()
@@ -19,21 +21,16 @@ export function CheckoutPage () {
   const searchParams = useSearchParams()
   const tn = searchParams.get('tn')
   const result = searchParams.get('result')
-  const [cartItems, setCartItems] = useState<IProduct[]>([])
+  const { cart, updateCart } = useCartContext()
   const [showSuccessModal, setShowSuccessModal] = useState(false)
   const [showFailModal, setShowFailModal] = useState(false)
 
-  useEffect(() => {
-    const cart = JSON.parse(localStorage.getItem('cart') ?? '[]')
-    setCartItems(cart)
-  }, [])
-
   const calculateTotalPrice = () => {
-    return cartItems.reduce((total, item) => total + item.price, 0)
+    return cart.reduce((total, item) => total + (item?.price ?? 0), 0)
   }
-  const { mutate: createOrder, isLoading: isCompletingOrder } = useCreateOrder({
+  const { mutate: createOrder } = useCreateOrder({
     onSuccess: () => {
-      localStorage.removeItem('cart')
+      updateCart([])
       localStorage.removeItem(tn as string)
       setShowSuccessModal(true)
     },
@@ -42,17 +39,17 @@ export function CheckoutPage () {
     }
   })
 
-  const { mutate: createUser, isLoading: isCreatingUser } = useSignup({
+  const { mutate: createUser } = useSignup({
     onSuccess: (response) => {
       if (response.data.status === 'success') {
         localStorage.setItem('user_token', response.data.token.accessToken)
         localStorage.setItem('user_id', response.data.data.user._id)
 
-        const cart: any[] = []
-        cartItems.map((item) => cart.push({ product: item._id, count: item.quantity }))
+        const products: any[] = []
+        cart.map((item) => products.push({ product: item._id, count: item.quantity }))
         createOrder({
           user: response.data.data.user._id,
-          products: cart,
+          products,
           deliveryStatus: false
         })
       }
@@ -74,7 +71,7 @@ export function CheckoutPage () {
         lastname,
         phoneNumber
       },
-      cart: cartItems
+      cart
     }))
     push('http://localhost:3001/payment/' + trackingNumber)
   })
@@ -187,13 +184,8 @@ export function CheckoutPage () {
                                     <Typography style={{ color: 'indianred', fontSize: '12px' }}>{errors.phoneNumber.message}</Typography>
                                 )}
                               </Box>
-                                <TextField
-                                    id="outlined-multiline-flexible"
-                                    label="date arive"
-                                    multiline
-                                    maxRows={10}
-                                    fullWidth
-                                />
+
+                              <DatePicker label="Basic date picker" />
                             </Box>
                             <Box>
                                 <FormControlLabel control={<Checkbox/>} label="Set as default shipping address"/>
@@ -208,9 +200,9 @@ export function CheckoutPage () {
 
                             <Typography fontWeight={'bold'}>Cart Summary</Typography>
                             <Typography fontWeight={'bold'} fontSize={'14px'}
-                                        marginTop={'10px'}>{cartItems.length} Item</Typography>
-                            {cartItems.map((item: IProduct) => (
-                                <Box key={item._id}>
+                                        marginTop={'10px'}>{cart.length} Item</Typography>
+                            {cart.map((item) => (
+                                <Box key={item._id} >
                                     <CardMedia sx={{ width: '100px', margin: '10px 0px' }}
                                                component="img"
                                                height="90px"

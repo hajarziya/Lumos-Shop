@@ -5,6 +5,7 @@ export default makeStyles()((theme) => ({
     width: '220px',
     backgroundColor: theme.palette.secondary.main,
     height: '100%',
+    paddingTop: '80px',
     position: 'fixed'
   },
   list: {
