@@ -49,7 +49,7 @@ export function OrdersPage () {
                             sx={{ marginLeft: '120px', marginBottom: '20px', color: theme.palette.primary.dark }}>
                     Orders
                 </Typography>
-                <Box mb={1} zIndex={'-10'}>
+                <Box mb={1} >
                     <ToggleButtonGroup color="primary" exclusive value={deliveryStatus ? 'delivered' : 'inProgress'}
                                        onChange={handleChange}>
                         <ToggleButton value="delivered">Delivered</ToggleButton>

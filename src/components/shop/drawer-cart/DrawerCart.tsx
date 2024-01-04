@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import {
   Box,
   Button,
@@ -13,7 +13,7 @@ import DeleteIcon from '@mui/icons-material/Delete'
 import { theme } from '@src/theme'
 import Link from 'next/link'
 import useStyles from '@src/components/shop/drawer-cart/DrawerCart.styles'
-import { IProduct } from '@src/api/interface'
+import { useCartContext } from '@src/context/CartContext'
 
 interface DrawerCartProps {
   open: boolean
@@ -22,16 +22,16 @@ interface DrawerCartProps {
 
 export function DrawerCart ({ open, onClose }: DrawerCartProps) {
   const { classes } = useStyles()
-  const [cartItems, setCartItems] = useState<IProduct[]>([])
-  useEffect(() => {
-    const cart = JSON.parse(localStorage.getItem('cart') ?? '[]')
-    setCartItems(cart)
-  }, [])
-  const handleDelete = (itemId: string) => {
-    const updatedCart = cartItems.filter((item) => item._id !== itemId)
-    setCartItems(updatedCart)
-    localStorage.setItem('cart', JSON.stringify(updatedCart))
+  const { cart, updateCart } = useCartContext()
+
+  const handleDelete = (itemId: string | undefined) => {
+    if (!itemId) {
+      return
+    }
+    const updatedCart = cart.filter((item) => item._id !== itemId)
+    updateCart(updatedCart)
   }
+
   return (
         <SwipeableDrawer anchor="right" open={open} onClose={onClose} onOpen={() => {}}>
             <Box p={2} style={{ width: '500px', height: '100vh' }} sx={{ backgroundColor: '#d6d5c9' }}>
@@ -43,15 +43,15 @@ export function DrawerCart ({ open, onClose }: DrawerCartProps) {
 
                 </Box>
                 <Divider sx={{ margin: '30px 0px' }} />
-                <Typography>{`You have ${cartItems.length} item(s) in your cart`}</Typography>
+                <Typography>{`You have ${cart.length} item(s) in your cart`}</Typography>
 
-                {cartItems.map((item: IProduct) => (
+                {cart.map((item) => (
                     <Box key={item._id} className={classes.productCart}>
                         <CardMedia sx={{ width: '30%' }} component="img" alt="Product Image" height="140" image={process.env.NEXT_PUBLIC_BASE_IMAGE_URL + item.images[0]} />
                         <Box className={classes.rightPartCart}>
                             <Stack direction={'row'} sx={{ width: '300px' }} justifyContent={'space-between'}>
                                 <Typography fontWeight={'bold'}>{item.name}</Typography>
-                                <Button onClick={() => { handleDelete(item._id) }}> <DeleteIcon sx={{ color: theme.palette.primary.main }} /></Button>
+                                <Button onClick={() => { handleDelete(item?._id) }}> <DeleteIcon sx={{ color: theme.palette.primary.main }} /></Button>
                             </Stack>
                             <Stack direction="row" justifyContent={'space-between'} alignItems={'center'} display={'flex'}>
                                 <Typography fontWeight={'bold'}>Quantity:{item.quantity}</Typography>
