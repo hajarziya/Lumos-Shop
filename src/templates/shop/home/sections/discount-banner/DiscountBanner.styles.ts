@@ -6,6 +6,5 @@ export default makeStyles()((theme) => ({
     height: '300px',
     margin: '20px auto',
     borderRadius: '15px'
-
   }
 }))

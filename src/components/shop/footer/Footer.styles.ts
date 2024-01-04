@@ -15,6 +15,21 @@ export default makeStyles()((theme) => ({
     flexDirection: 'column',
     width: '200px'
 
+  },
+  icons: {
+    width: '30px',
+    height: '30px',
+    color: theme.palette.primary.dark,
+    cursor: 'pointer'
+  },
+  footerAddress: {
+    color: theme.palette.primary.main,
+    fontWeight: 'bold'
+  },
+  btnAndFooter: {
+    backgroundColor: 'transparent',
+    color: theme.palette.primary.main,
+    fontWeight: 'bold'
   }
 
 }))

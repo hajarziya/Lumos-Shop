@@ -9,7 +9,7 @@ export default makeStyles()((theme) => ({
     backgroundColor: theme.palette.secondary.main,
     width: '300px',
     alignItems: 'center',
-    margin: '100px auto',
+    margin: '12% auto',
     padding: '50px 30px',
     borderRadius: '15px',
     textAlign: 'center'
